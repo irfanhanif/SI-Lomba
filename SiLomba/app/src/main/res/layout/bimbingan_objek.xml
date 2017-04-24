@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/bimbingna_objek_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/bimbingan_objek_tanggal"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Bimbingan"
+            />
+        <TextView
+            android:id="@+id/bimbingan_objek_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comment"/>
+
+    </LinearLayout>
+
+</LinearLayout>
