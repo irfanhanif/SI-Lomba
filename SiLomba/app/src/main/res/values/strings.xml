@@ -2,4 +2,21 @@
     <string name="app_name">SiLomba</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string-array name="jurusan">
+        <item>Teknik Aristektur</item>
+        <item>Teknik Lingkungan</item>
+        <item>Perencanaan Wilayah Kota</item>
+        <item>Teknik Sipil</item>
+        <item>Desain Produk</item>
+        <item>Desain Interior</item>
+        <item>Teknik Material dan Metalurgi</item>
+        <item>Teknik Mesin</item>
+        <item>Matematika</item>
+        <item>Fisika</item>
+        <item>Teknik Perkapalan</item>
+        <item>Teknik Informatika</item>
+        <item>Sistem Informasi</item>
+    </string-array>
+
 </resources>

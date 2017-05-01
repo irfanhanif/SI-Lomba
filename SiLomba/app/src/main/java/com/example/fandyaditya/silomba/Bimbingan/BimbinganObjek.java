@@ -10,9 +10,9 @@ import com.example.fandyaditya.silomba.R;
  */
 
 public class BimbinganObjek {
-    String id;
-    String tanggal;
-    String comment;
+    private String id;
+    private String tanggal;
+    private String comment;
 
     public BimbinganObjek(String id, String tanggal, String comment) {
         this.id = id;
@@ -32,12 +32,12 @@ public class BimbinganObjek {
         return comment;
     }
 
-    public static class DetailBimbingan extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_detail_bimbingan);
-        }
-    }
+//    public static class DetailBimbingan extends AppCompatActivity {
+//
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.activity_detail_bimbingan);
+//        }
+//    }
 }

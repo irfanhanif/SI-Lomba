@@ -44,21 +44,21 @@ public class ListLombaObjek {
         return hadiah;
     }
 
-    public static class BuatTim extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_buat_tim);
-        }
-    }
-
-    public static class DetailLomba extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_detail_lomba);
-        }
-    }
+//    public static class BuatTim extends AppCompatActivity {
+//
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.activity_buat_tim);
+//        }
+//    }
+//
+//    public static class DetailLomba extends AppCompatActivity {
+//
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.activity_detail_lomba);
+//        }
+//    }
 }

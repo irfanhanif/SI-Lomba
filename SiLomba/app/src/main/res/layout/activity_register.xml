@@ -99,7 +99,9 @@
                 <Spinner
                     android:id="@+id/register_jurusan_spnr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:entries="@array/jurusan"
+                    />
             </LinearLayout>
             <Button
                 android:id="@+id/register_registerbtn"
