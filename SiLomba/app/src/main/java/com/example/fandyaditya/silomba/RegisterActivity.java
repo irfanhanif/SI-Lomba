@@ -50,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     private void errorChecking(){
         if(username.length()<=3 || password.length()<=3){
             Toast.makeText(getBaseContext(),"username atau password kurang panjang",Toast.LENGTH_SHORT).show();
@@ -92,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void validate(String response){
         ParseJSON pj = new ParseJSON(response);
-        String status = pj.registerParse();
+        String status = pj.statusCodeParse();
         if(status.equals("success")){
             Toast.makeText(getBaseContext(),"Register Sukses",Toast.LENGTH_SHORT).show();
             finish();

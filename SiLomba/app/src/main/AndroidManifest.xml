@@ -28,7 +28,8 @@
         <activity android:name=".Profile.AturProfile" />
         <activity android:name=".ListLomba.DetailLomba" />
         <activity android:name=".PengaturanTim.AturTim" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ListLomba.ListTim"></activity>
     </application>
 
 </manifest>

@@ -79,7 +79,7 @@ public class ListLombaAdapter extends RecyclerView.Adapter<ListLombaAdapter.View
 
     private void openIntent(String idLomba){
         Bundle bundle = new Bundle();
-        Intent openPage = new Intent(context, ListLombaObjek.DetailLomba.class);
+        Intent openPage = new Intent(context, DetailLomba.class);
         bundle.putString("idLomba",idLomba);
         openPage.putExtras(bundle);
         context.startActivity(openPage);
