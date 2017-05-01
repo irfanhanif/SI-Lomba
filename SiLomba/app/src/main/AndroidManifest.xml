@@ -18,6 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ListLomba.ListLombaObjek$DetailLomba" />
+        <activity android:name=".ListLomba.ListLombaObjek$BuatTim" />
+        <activity android:name=".PengaturanTim.RequestCalon.RequestCalonAnggota" />
+        <activity android:name=".Bimbingan.BimbinganObjek$DetailBimbingan" />
+        <activity android:name=".Bimbingan.Dosen.ListDosen" />
+        <activity android:name=".Bimbingan.BikinBimbingan" />
+        <activity android:name=".Bimbingan.DetailBimbingan" />
+        <activity android:name=".Profile.AturProfile" />
+        <activity android:name=".ListLomba.DetailLomba" />
+        <activity android:name=".PengaturanTim.AturTim" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
