@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2017 at 03:46 PM
+-- Generation Time: May 01, 2017 at 06:10 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -46,30 +46,6 @@ CREATE TABLE `bimbingan` (
   `tanggal_bimbingan` date NOT NULL,
   `comment` longtext NOT NULL,
   `file_bimbingan` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cari_tim_otomatis`
---
-
-CREATE TABLE `cari_tim_otomatis` (
-  `id_cari_tim` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_job` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cari_tim_otomatis_reverse`
---
-
-CREATE TABLE `cari_tim_otomatis_reverse` (
-  `id_reverse` int(11) NOT NULL,
-  `id_tim` int(11) NOT NULL,
-  `id_job` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,22 +177,6 @@ ALTER TABLE `bimbingan`
   ADD KEY `id_dosbing` (`id_dosbing`);
 
 --
--- Indexes for table `cari_tim_otomatis`
---
-ALTER TABLE `cari_tim_otomatis`
-  ADD PRIMARY KEY (`id_cari_tim`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_job` (`id_job`);
-
---
--- Indexes for table `cari_tim_otomatis_reverse`
---
-ALTER TABLE `cari_tim_otomatis_reverse`
-  ADD PRIMARY KEY (`id_reverse`),
-  ADD KEY `id_tim` (`id_tim`),
-  ADD KEY `id_job` (`id_job`);
-
---
 -- Indexes for table `dosbing`
 --
 ALTER TABLE `dosbing`
@@ -288,20 +248,6 @@ ALTER TABLE `anggota_tim`
 ALTER TABLE `bimbingan`
   ADD CONSTRAINT `bimbingan_ibfk_1` FOREIGN KEY (`id_tim`) REFERENCES `tim` (`id_tim`),
   ADD CONSTRAINT `bimbingan_ibfk_2` FOREIGN KEY (`id_dosbing`) REFERENCES `dosbing` (`id_dosbing`);
-
---
--- Constraints for table `cari_tim_otomatis`
---
-ALTER TABLE `cari_tim_otomatis`
-  ADD CONSTRAINT `cari_tim_otomatis_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `cari_tim_otomatis_ibfk_2` FOREIGN KEY (`id_job`) REFERENCES `job` (`id_job`);
-
---
--- Constraints for table `cari_tim_otomatis_reverse`
---
-ALTER TABLE `cari_tim_otomatis_reverse`
-  ADD CONSTRAINT `cari_tim_otomatis_reverse_ibfk_1` FOREIGN KEY (`id_tim`) REFERENCES `tim` (`id_tim`),
-  ADD CONSTRAINT `cari_tim_otomatis_reverse_ibfk_2` FOREIGN KEY (`id_job`) REFERENCES `job` (`id_job`);
 
 --
 -- Constraints for table `request_tim`
