@@ -7,10 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Fandy Aditya on 4/24/2017.
@@ -36,8 +47,10 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         RequestCalonObjek requestCalonObjek = listItem.get(position);
 
-        String id = requestCalonObjek.getId();
-        String strJob = "("+requestCalonObjek.getJob()+")";
+        final String idRequest = requestCalonObjek.getIdRequest();
+        final String idUser = requestCalonObjek.getIdUser();
+        final String job = requestCalonObjek.getJob();
+        String strJob = "("+job+")";
 
         holder.nama.setText(requestCalonObjek.getNama());
         holder.job.setText(strJob);
@@ -45,13 +58,13 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                actionRequest(idRequest,idUser,job,"accept");
             }
         });
         holder.reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                actionRequest(idRequest,idUser,job,"reject");
             }
         });
 
@@ -74,5 +87,48 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
             accept = (ImageView)itemView.findViewById(R.id.request_calon_objek_acc);
             reject = (ImageView)itemView.findViewById(R.id.request_calon_objek_rjt);
         }
+    }
+    private void actionRequest(final String idRequest, final String idUser, final String idJob,final String code){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                validate(response,code);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                param.put("idUser",idUser);
+                param.put("idJob",idJob);
+                param.put("code",code);
+                return param;
+            }
+        };
+        RequestQueue newReq = Volley.newRequestQueue(context);
+        newReq.add(stringRequest);
+    }
+
+    private void validate(String response,String code){
+        ParseJSON pj = new ParseJSON(response);
+        String status = pj.statusCodeParse();
+        if(code.equals("acc")){
+            if(status.equals("success")){
+                Toast.makeText(context,"Anggota berhasil diterima",Toast.LENGTH_LONG).show();
+            }
+            else Toast.makeText(context,"Gagal Menerima Anggota",Toast.LENGTH_LONG).show();
+        }
+        else{
+            if(status.equals("success")){
+                Toast.makeText(context,"Anggota Ditolak",Toast.LENGTH_LONG).show();
+            }
+            else Toast.makeText(context,"Gagal Menolak Anggota",Toast.LENGTH_LONG).show();
+        }
+
     }
 }

@@ -24,7 +24,7 @@ public class ListLombaAdapter extends RecyclerView.Adapter<ListLombaAdapter.View
     private List<ListLombaObjek> listItem;
     private Context context;
 
-    public ListLombaAdapter(List<ListLombaObjek> listItem, Context context) {
+    public ListLombaAdapter(Context listItem, List<ListLombaObjek> context) {
         this.listItem = listItem;
         this.context = context;
     }

@@ -9,7 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
+
+import java.util.List;
 
 /**
  * Created by Fandy Aditya on 4/24/2017.
@@ -29,12 +36,26 @@ public class ListLombaFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fetchData();
+        getData();
     }
-    private void fetchData(){
+    private void getData(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "someurl.com", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                fetchData(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
 
     }
-    private void getList(){
-
+    private void fetchData(String response){
+        ParseJSON pj = new ParseJSON(response);
+        List<ListLombaObjek> listLombaObjekList = pj.listLomba();
+        ListLombaAdapter listLombaAdapter = new ListLombaAdapter(getContext(),listLombaObjekList);
+        rv.setAdapter(listLombaAdapter);
     }
 }

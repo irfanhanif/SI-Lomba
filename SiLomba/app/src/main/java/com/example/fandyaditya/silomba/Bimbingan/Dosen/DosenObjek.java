@@ -5,12 +5,20 @@ package com.example.fandyaditya.silomba.Bimbingan.Dosen;
  */
 
 public class DosenObjek {
-    String nama;
-    String noHp;
+    private String id;
+    private String nama;
+    private String noHp;
+    private String jurusan;
 
-    public DosenObjek(String nama, String noHp) {
+    public DosenObjek(String id, String nama, String noHp, String jurusan) {
+        this.id = id;
         this.nama = nama;
         this.noHp = noHp;
+        this.jurusan = jurusan;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNama() {
@@ -19,5 +27,8 @@ public class DosenObjek {
 
     public String getNoHp() {
         return noHp;
+    }
+    public String getJurusan(){
+        return jurusan;
     }
 }

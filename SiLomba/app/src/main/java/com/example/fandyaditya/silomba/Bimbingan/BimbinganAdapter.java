@@ -23,7 +23,7 @@ public class BimbinganAdapter extends RecyclerView.Adapter<BimbinganAdapter.View
     private List<BimbinganObjek> listItem;
     private Context context;
 
-    public BimbinganAdapter(List<BimbinganObjek> listItem) {
+    public BimbinganAdapter(Context context, List<BimbinganObjek> listItem) {
         this.listItem = listItem;
     }
 

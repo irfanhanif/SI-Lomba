@@ -42,6 +42,7 @@ public class DetailLomba extends AppCompatActivity {
 
     String idLomba;
     String idTim;
+    public static String idUser;
 
 
     @Override
@@ -61,6 +62,7 @@ public class DetailLomba extends AppCompatActivity {
         bundle = getIntent().getExtras();
         idLomba = bundle.getString("idLomba");
         idTim = bundle.getString("idTim");
+        idUser = bundle.getString("idUser");
 
         listTimBtn.setOnClickListener(op);
         ikutSertaBtn.setOnClickListener(op);

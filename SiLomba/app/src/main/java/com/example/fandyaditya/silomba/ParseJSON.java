@@ -1,5 +1,10 @@
 package com.example.fandyaditya.silomba;
 
+import com.example.fandyaditya.silomba.Bimbingan.BimbinganObjek;
+import com.example.fandyaditya.silomba.Bimbingan.Dosen.DosenObjek;
+import com.example.fandyaditya.silomba.ListLomba.ListLombaObjek;
+import com.example.fandyaditya.silomba.PengaturanTim.RequestCalon.RequestCalonObjek;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,6 +103,95 @@ public class ParseJSON {
             parseVal.add(jsonObject.getString("jurusan"));
             parseVal.add(jsonObject.getString("angkatan"));
             parseVal.add(jsonObject.getString("file_profpic"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
+    public List<DosenObjek> listDosen(){
+        JSONObject jsonObject;
+        List<DosenObjek> parseVal = new ArrayList<>();
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray data = jsonObject.getJSONArray("data");
+            for(int i=0;i<data.length();i++){
+                JSONObject jRow = data.getJSONObject(i);
+                DosenObjek dosenObjek = new DosenObjek(
+                        jRow.getString("id_dosbing"),
+                        jRow.getString("nama_dosbing"),
+                        jRow.getString("jurusan_dosbing"),
+                        jRow.getString("nohp_dosbing")
+                );
+                parseVal.add(dosenObjek);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
+    public List<RequestCalonObjek> listRequestCalon(){
+        JSONObject jsonObject;
+        List<RequestCalonObjek> parseVal = new ArrayList<>();
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray data = jsonObject.getJSONArray("data");
+            for (int i =0;i<data.length();i++){
+                JSONObject jRow = data.getJSONObject(i);
+                RequestCalonObjek requestCalonObjek = new RequestCalonObjek(
+                        jRow.getString("id_request"),
+                        jRow.getString("id_user"),
+                        jRow.getString("nama"),
+                        jRow.getString("nama_job")
+                );
+                parseVal.add(requestCalonObjek);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
+    public List<BimbinganObjek> listBimbingan(){
+        JSONObject jsonObject;
+        List<BimbinganObjek> parseVal = new ArrayList<>();
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray data = jsonObject.getJSONArray("data");
+            for (int i=0;i<data.length();i++){
+                JSONObject jRow = data.getJSONObject(i);
+                BimbinganObjek bimbinganObjek = new BimbinganObjek(
+                        jRow.getString("id_bimbingan"),
+                        jRow.getString("tanggal_bimbingan"),
+                        jRow.getString("comment_bimbingan")
+                );
+                parseVal.add(bimbinganObjek);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
+    public List<ListLombaObjek> listLomba(){
+        JSONObject jsonObject;
+        List<ListLombaObjek> parseVal = new ArrayList<>();
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray data = jsonObject.getJSONArray("data");
+            for(int i=0;i<data.length();i++){
+                JSONObject jRow = data.getJSONObject(i);
+                ListLombaObjek listLombaObjek = new ListLombaObjek(
+                        jRow.getString("id_lomba"),
+                        jRow.getString("nama_lomba"),
+                        jRow.getString("penyelenggara"),
+                        jRow.getString("hadiah"),
+                        jRow.getString("file_fotolomba")
+                );
+                parseVal.add(listLombaObjek);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

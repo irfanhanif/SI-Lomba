@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -74,10 +77,35 @@ public class AturProfile extends AppCompatActivity {
                 return param;
             }
         };
+
+        RequestQueue newReq = Volley.newRequestQueue(this);
+        newReq.add(stringRequest);
     }
 
     private void update(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                fetchData(response,"post");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                param.put("nama",namaProfile.getText().toString());
+                param.put("jurusan",jurusanProfile.getText().toString());
+//                param.put("fileProfPic",profPic.getBytes().toString());
+                return param;
+            }
+        };
+        RequestQueue newReq = Volley.newRequestQueue(this);
+        newReq.add(stringRequest);
     }
 
     private void uploadImg(){
@@ -95,7 +123,11 @@ public class AturProfile extends AppCompatActivity {
             profPic = fetchGet.get(3);
         }
         else{
-
+            String status = pj.statusCodeParse();
+            if(status.equals("success")){
+                Toast.makeText(getBaseContext(),"Profil Berhasil diedit",Toast.LENGTH_LONG).show();
+            }
+            else Toast.makeText(getBaseContext(),"Gagal Edit Profil",Toast.LENGTH_LONG).show();
         }
     }
 }
