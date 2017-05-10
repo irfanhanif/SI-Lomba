@@ -7,7 +7,13 @@ function User(data){
     id_user: {
       type: Sequelize.INTEGER,
       primaryKey: true
-    }
+    },
+    nrp: Sequelize.STRING,
+    password: Sequelize.STRING,
+    nama: Sequelize.STRING,
+    email: Sequelize.STRING,
+    jurusan: Sequelize.STRING,
+    file_fotoprofil: Sequelize.STRING
   }, {
     timestamps: false,
     paranoid: true,
@@ -28,7 +34,15 @@ User.prototype.checkUserAccount = function(nrp, password){
 }
 
 User.prototype.registerNewAccount = function(req){
-  
+  var new_user = this.User.build({
+    nrp: req.nrp,
+    password: req.password,
+    nama: req.nama,
+    email: req.email,
+    jurusan: req.jurusan,
+    file_fotoprofil: req.file_fotoprofil
+  });
+  return new_user.save()
 }
 
 module.exports = User;

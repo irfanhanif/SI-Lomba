@@ -10,7 +10,7 @@ UserController.prototype.loginCheck = function(res, req){
       res.send(ret);
     }
     else{
-      var ret = {"status": "failed"};
+      var ret = {"status": "success"};
       res.send(ret);
     }
   });
@@ -18,7 +18,17 @@ UserController.prototype.loginCheck = function(res, req){
 
 UserController.prototype.registerUser = function(res, req){
   var user = new this.user();
-
+  user.registerNewAccount(req).then(function(result){
+    console.log("Insert berhasil!");
+    var ret = {"status": "success"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    console.log("Insert gagal!");
+    console.log(err);
+    var ret = {"status": "success"};
+    res.send(ret);
+  });
 }
 
 module.exports = UserController;
