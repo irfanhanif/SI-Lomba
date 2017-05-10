@@ -65,7 +65,7 @@ public class BimbinganAdapter extends RecyclerView.Adapter<BimbinganAdapter.View
         }
     }
     private void openPage(String id){
-        Intent myIntent = new Intent(context, BimbinganObjek.DetailBimbingan.class);
+        Intent myIntent = new Intent(context, DetailBimbingan.class);
         Bundle bundle = new Bundle();
         bundle.putString("id",id);
         myIntent.putExtras(bundle);

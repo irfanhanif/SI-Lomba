@@ -29,7 +29,9 @@
         <activity android:name=".ListLomba.DetailLomba" />
         <activity android:name=".PengaturanTim.AturTim" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListLomba.ListTim"></activity>
+        <activity android:name=".ListLomba.ListTim" />
+        <activity android:name=".SplashScreen" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
