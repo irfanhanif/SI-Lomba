@@ -45,4 +45,13 @@ User.prototype.registerNewAccount = function(req){
   return new_user.save()
 }
 
+User.prototype.getAllData = function(req){
+  return this.User.findAll({
+    attributes: ['password', 'nama', 'email', 'jurusan'],
+    where: {
+      nrp: req.nrp
+    }
+  });
+}
+
 module.exports = User;

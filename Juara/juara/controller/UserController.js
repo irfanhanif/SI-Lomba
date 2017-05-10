@@ -31,4 +31,11 @@ UserController.prototype.registerUser = function(res, req){
   });
 }
 
+UserController.prototype.getUserProfile = function(res, req){
+  var user = new this.user();
+  user.getAllData(req).then(function(result){
+    res.send(result);
+  });
+}
+
 module.exports = UserController;
