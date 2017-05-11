@@ -3,6 +3,7 @@ var router = express.Router();
 
 var UserController = require('../controller/UserController');
 var TimController = require('../controller/TimController');
+var LombaController = require('../controller/LombaController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -31,6 +32,12 @@ router.post('/changeprofile', function(req, res, next){
 router.post('/detailtim', function(req, res, next){
   var tim = new TimController();
   tim.getTimData(res, req.body);
+});
+
+/* Routing Lomba */
+router.post('/listlomba', function(req, res, next){
+  var lomba = new LombaController();
+  lomba.getLomba(res, req.body);
 });
 
 module.exports = router;
