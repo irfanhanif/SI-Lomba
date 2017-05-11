@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var UserController = require('../controller/UserController');
+var TimController = require('../controller/TimController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,6 +25,12 @@ router.post('/editprofile', function(req, res, next){
 router.post('/changeprofile', function(req, res, next){
   var user = new UserController();
   user.changeProfile(res, req.body);
+});
+
+/* Routing Tim */
+router.post('/detailtim', function(req, res, next){
+  var tim = new TimController();
+  tim.getTimData(res, req.body);
 });
 
 module.exports = router;
