@@ -23,6 +23,18 @@ function User(data){
   });
 }
 
+User.prototype.changeUserProfile = function(req){
+  return this.User.update({
+    nama: req.nama,
+    jurusan: req.jurusan,
+    password: req.password
+  }, {
+    where: {
+      nrp: req.nrp
+    }
+  });
+}
+
 User.prototype.checkUserAccount = function(nrp, password){
   return this.User.findAll({
     attributes: ['nrp', 'password'],

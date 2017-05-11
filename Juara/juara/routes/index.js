@@ -18,9 +18,12 @@ router.post('/register', function(req, res, next){
   result = register.registerUser(res, req.body);
 });
 router.post('/editprofile', function(req, res, next){
-  console.log(req);
   var get_profile = new UserController();
   get_profile.getUserProfile(res, req.body);
+});
+router.post('/changeprofile', function(req, res, next){
+  var user = new UserController();
+  user.changeProfile(res, req.body);
 });
 
 module.exports = router;
