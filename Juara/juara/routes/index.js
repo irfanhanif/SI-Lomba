@@ -33,6 +33,10 @@ router.post('/detailtim', function(req, res, next){
   var tim = new TimController();
   tim.getTimData(res, req.body);
 });
+router.post('/listtim', function(req, res, next){
+  var tim = new TimController();
+  tim.listTim(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){
