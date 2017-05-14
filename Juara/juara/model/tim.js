@@ -30,4 +30,29 @@ Tim.prototype.getMyTim = function(req){
   });
 }
 
+Tim.prototype.insertTeam = function(req){
+  var new_team = this.Tim.build({
+    nama_tim: req.nama_tim,
+    nrp: req.nrp,
+    maksimal_anggota: req.maksimal_anggota,
+    deskripsi_tim: req.deskripsi_tim,
+    file_fotoprofil_tim: req.file_fotoprofil_tim
+  });
+  return new_team.save()
+}
+
+Tim.prototype.editTeam = function(req){
+  return this.Tim.update({
+    nama_tim: req.nama_tim,
+    nrp: req.nrp,
+    maksimal_anggota: req.maksimal_anggota,
+    deskripsi_tim: req.deskripsi_tim,
+    file_fotoprofil_tim: req.file_fotoprofil_tim
+  }, {
+    where: {
+      id_tim: req.id_tim
+    }
+  });
+}
+
 module.exports = Tim;

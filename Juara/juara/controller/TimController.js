@@ -2,6 +2,30 @@ function TimController(){
   this.tim = require('../Model/tim');
 }
 
+TimController.prototype.createTeam = function(res, req){
+  var tim = new this.tim();
+  tim.insertTeam(req).then(function(result){
+    var ret = {"status": "success"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    var ret = {"status": "failed"};
+    res.send(ret);
+  });
+}
+
+TimController.prototype.editTeam = function(res, req){
+  var tim = new this.tim();
+  tim.editTeam(req).then(function(result){
+    var ret = {"status": "success"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    var ret = {"status": "failed"};
+    res.send(ret);
+  });
+}
+
 TimController.prototype.listRequest = function(res, req){
   this.request_tim = require('../Model/request_tim');
   var request = new this.request_tim();

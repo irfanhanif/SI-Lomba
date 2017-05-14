@@ -57,6 +57,14 @@ router.post('/listrequest', function(req, res, nect){
   var tim = new TimController();
   tim.listRequest(res, req.body);
 });
+router.post('/createteam', function(req, res, nect){
+  var tim = new TimController();
+  tim.createTeam(res, req.body);
+});
+router.post('/editteam', function(req, res, nect){
+  var tim = new TimController();
+  tim.editTeam(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){
