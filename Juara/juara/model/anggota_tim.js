@@ -9,7 +9,6 @@ function AnggotaTim(data){
       primaryKey: true
     },
     id_tim: Sequelize.INTEGER,
-    id_job: Sequelize.INTEGER,
     nrp: Sequelize.STRING,
   }, {
     timestamps: false,
