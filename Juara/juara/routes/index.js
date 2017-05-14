@@ -53,6 +53,10 @@ router.post('/acceptrequest', function(req, res, nect){
   var tim = new TimController();
   tim.acceptRequest(res, req.body);
 });
+router.post('/listrequest', function(req, res, nect){
+  var tim = new TimController();
+  tim.listRequest(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){

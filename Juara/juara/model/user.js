@@ -4,11 +4,10 @@ function User(data){
 
   var connect_to = new connect();
   this.User = connect_to.sequelize.define('user', {
-    id_user: {
+    nrp: {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    nrp: Sequelize.STRING,
     password: Sequelize.STRING,
     nama: Sequelize.STRING,
     email: Sequelize.STRING,

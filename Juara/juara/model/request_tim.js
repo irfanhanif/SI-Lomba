@@ -19,6 +19,22 @@ function RequestTim(data){
   });
 }
 
+RequestTim.prototype.getListRequest = function(req){
+  var user = require('../Model/user');
+  var User = new user();
+
+  this.RequestTim.belongsTo(User.User, {foreignKey: 'nrp'});
+
+  return this.RequestTim.findAll({
+    include: [{
+      model: User.User
+    }],
+    where: {
+      id_tim: req.id_tim
+    }
+  });
+}
+
 RequestTim.prototype.newRequest = function(req){
   var new_request = this.RequestTim.build({
     nrp: req.nrp,

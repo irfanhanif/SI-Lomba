@@ -2,6 +2,14 @@ function TimController(){
   this.tim = require('../Model/tim');
 }
 
+TimController.prototype.listRequest = function(res, req){
+  this.request_tim = require('../Model/request_tim');
+  var request = new this.request_tim();
+  request.getListRequest(req).then(function(result){
+    res.send(result);
+  });
+}
+
 TimController.prototype.certainTeam = function(res, req){
   this.tim_ikut_lomba = require('../Model/tim_ikut_lomba');
   var tim_ikut_lomba = new this.tim_ikut_lomba();
