@@ -39,9 +39,9 @@ TimController.prototype.getTimData = function(res, req){
   setTimeout(result, 100);
 }
 
-TimController.prototype.listTim = function(req, req){
+TimController.prototype.listTim = function(res, req){
   var list_my_team = new this.tim();
-  list_my_tim.getMyTim(req).then(function(result){
+  list_my_team.getMyTim(req).then(function(result){
     res.send(result);
   });
 }
