@@ -1,8 +1,6 @@
 package com.example.fandyaditya.silomba;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,17 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import com.example.fandyaditya.silomba.Bimbingan.BimbinganFragment;
 import com.example.fandyaditya.silomba.ListLomba.ListLombaFragment;
-import com.example.fandyaditya.silomba.PengaturanTim.PengaturanTimFragment;
+import com.example.fandyaditya.silomba.PengaturanTim.ListTim.PengaturanTimFragment;
 import com.example.fandyaditya.silomba.Profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private String[] tabsTitles = {"Lomba","Tim","Bimbingan","Profil"};
+    private int[] iconSelected = {R.drawable.lomba_black,R.drawable.tim_black,R.drawable.bimbingan_black,R.drawable.profile_black};
+    private int[] iconNotSelected = {R.drawable.lomba_white,R.drawable.tim_white,R.drawable.bimbingan_white,R.drawable.profile_white};
+    private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle bundle = getIntent().getExtras();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -55,53 +53,63 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(opcl);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
+        tabLayout.getTabAt(0).setIcon(iconSelected[0]);
+        tabLayout.getTabAt(1).setIcon(iconNotSelected[1]);
+        tabLayout.getTabAt(2).setIcon(iconNotSelected[2]);
+        tabLayout.getTabAt(3).setIcon(iconNotSelected[3]);
+        setTitle("Lomba");
     }
 
+    ViewPager.OnPageChangeListener opcl = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+        }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+        @Override
+        public void onPageSelected(int position) {
+            setTitle(tabsTitles[position]);
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+            if(position==0){
+                tabLayout.getTabAt(0).setIcon(iconSelected[0]);
+                tabLayout.getTabAt(1).setIcon(iconNotSelected[1]);
+                tabLayout.getTabAt(2).setIcon(iconNotSelected[2]);
+                tabLayout.getTabAt(3).setIcon(iconNotSelected[3]);
+            }
+            else if(position==1){
+                tabLayout.getTabAt(0).setIcon(iconNotSelected[0]);
+                tabLayout.getTabAt(1).setIcon(iconSelected[1]);
+                tabLayout.getTabAt(2).setIcon(iconNotSelected[2]);
+                tabLayout.getTabAt(3).setIcon(iconNotSelected[3]);
+            }
+            else if(position==2){
+                tabLayout.getTabAt(0).setIcon(iconNotSelected[0]);
+                tabLayout.getTabAt(2).setIcon(iconSelected[2]);
+                tabLayout.getTabAt(3).setIcon(iconNotSelected[3]);
+                tabLayout.getTabAt(1).setIcon(iconNotSelected[1]);
+            }
+            else if(position==3){
+                tabLayout.getTabAt(0).setIcon(iconNotSelected[0]);
+                tabLayout.getTabAt(3).setIcon(iconSelected[3]);
+                tabLayout.getTabAt(1).setIcon(iconNotSelected[1]);
+                tabLayout.getTabAt(2).setIcon(iconNotSelected[2]);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+//        private Bundle bundle;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -111,16 +119,25 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
            switch (position){
                case 0 :
-                   return new ListLombaFragment();
+                   ListLombaFragment listLombaFragment = new ListLombaFragment();
+//                   listLombaFragment.setArguments(bundle);
+                   return listLombaFragment;
                case 1 :
-                   return new PengaturanTimFragment();
+                   PengaturanTimFragment pengaturanTim = new PengaturanTimFragment();
+//                   pengaturanTim.setArguments(bundle);
+                   return pengaturanTim;
                case 2 :
-                   return new BimbinganFragment();
+                   BimbinganFragment bimbinganFragment = new BimbinganFragment();
+//                   bimbinganFragment.setArguments(bundle);
+                   return bimbinganFragment;
                case 3:
-                   return new ProfileFragment();
+                   ProfileFragment profileFragment = new ProfileFragment();
+//                   profileFragment.setArguments(bundle);
+                   return profileFragment;
                default:return null;
            }
         }
+
 
         @Override
         public int getCount() {
@@ -130,16 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Lomba";
-                case 1:
-                    return "Tim";
-                case 2:
-                    return "Bimbingan";
-                case 3:
-                    return "Profil";
-            }
+
             return null;
         }
     }

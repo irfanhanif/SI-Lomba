@@ -11,25 +11,25 @@ import com.example.fandyaditya.silomba.R;
 
 public class ListLombaObjek {
     private String id;
-    private String img;
     private String nama;
     private String penyelenggara;
+    private String kategori;
+    private String syarat;
+    private String deskripsiLomba;
     private String hadiah;
 
-    public ListLombaObjek(String id, String img, String nama, String penyelenggara, String hadiah) {
+    public ListLombaObjek(String id, String nama, String penyelenggara, String kategori, String syarat, String deskripsiLomba, String hadiah) {
         this.id = id;
-        this.img = img;
         this.nama = nama;
         this.penyelenggara = penyelenggara;
+        this.kategori = kategori;
+        this.syarat = syarat;
+        this.deskripsiLomba = deskripsiLomba;
         this.hadiah = hadiah;
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getImg() {
-        return img;
     }
 
     public String getNama() {
@@ -44,21 +44,15 @@ public class ListLombaObjek {
         return hadiah;
     }
 
-//    public static class BuatTim extends AppCompatActivity {
-//
-//        @Override
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_buat_tim);
-//        }
-//    }
-//
-//    public static class DetailLomba extends AppCompatActivity {
-//
-//        @Override
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_detail_lomba);
-//        }
-//    }
+    public String getKategori() {
+        return kategori;
+    }
+
+    public String getSyarat() {
+        return syarat;
+    }
+
+    public String getDeskripsiLomba() {
+        return deskripsiLomba;
+    }
 }

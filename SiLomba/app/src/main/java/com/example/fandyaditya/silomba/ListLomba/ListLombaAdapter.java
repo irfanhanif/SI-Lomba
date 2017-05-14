@@ -24,7 +24,7 @@ public class ListLombaAdapter extends RecyclerView.Adapter<ListLombaAdapter.View
     private List<ListLombaObjek> listItem;
     private Context context;
 
-    public ListLombaAdapter(Context listItem, List<ListLombaObjek> context) {
+    public ListLombaAdapter(Context context, List<ListLombaObjek> listItem) {
         this.listItem = listItem;
         this.context = context;
     }
@@ -40,16 +40,22 @@ public class ListLombaAdapter extends RecyclerView.Adapter<ListLombaAdapter.View
         ListLombaObjek listLombaObjek = listItem.get(position);
 
         final String idLomba = listLombaObjek.getId();
+        final String namaLomba = listLombaObjek.getNama();
+        final String penyelenggaraLomba = listLombaObjek.getPenyelenggara();
+        final String kategoriLomba = listLombaObjek.getKategori();
+        final String hadiahLomba = listLombaObjek.getHadiah();
+        final String syaratLomba = listLombaObjek.getSyarat();
+        final String deskripsiLomba = listLombaObjek.getDeskripsiLomba();
 
         holder.namaLomba.setText(listLombaObjek.getNama());
         holder.penyelenggaraLomba.setText(listLombaObjek.getPenyelenggara());
         holder.hadiahLomba.setText(listLombaObjek.getHadiah());
-        Glide.with(context).load(listLombaObjek.getImg()).into(holder.imgLomba);
+//        Glide.with(context).load(listLombaObjek.getImg()).into(holder.imgLomba);
 
         holder.viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openIntent(idLomba);
+                openIntent(idLomba,namaLomba,penyelenggaraLomba,kategoriLomba,hadiahLomba,syaratLomba,deskripsiLomba);
             }
         });
     }
@@ -77,10 +83,16 @@ public class ListLombaAdapter extends RecyclerView.Adapter<ListLombaAdapter.View
         }
     }
 
-    private void openIntent(String idLomba){
+    private void openIntent(String idLomba, String namaLomba, String penyelenggaraLomba, String kategoriLomba, String hadiahLomba,String syaratLomba, String deskripsiLomba){
         Bundle bundle = new Bundle();
         Intent openPage = new Intent(context, DetailLomba.class);
         bundle.putString("idLomba",idLomba);
+        bundle.putString("namaLomba",namaLomba);
+        bundle.putString("penyelenggaraLomba",penyelenggaraLomba);
+        bundle.putString("kategoriLomba",kategoriLomba);
+        bundle.putString("hadiahLomba",hadiahLomba);
+        bundle.putString("syaratLomba",syaratLomba);
+        bundle.putString("deskripsiLomba",deskripsiLomba);
         openPage.putExtras(bundle);
         context.startActivity(openPage);
     }

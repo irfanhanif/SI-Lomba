@@ -13,7 +13,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,23 +59,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Upload Foto"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:id="@+id/textView4" />
+
                 <Button
                     android:id="@+id/buat_tim_browse_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Browse"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/buat_tim_buat_btn"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Buat Tim!"/>
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/buat_tim_buat_btn"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/myButton"
+        android:text="Buat Tim!"/>
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,8 +33,8 @@ import java.util.Map;
 
 public class BimbinganFragment extends Fragment {
     RecyclerView rv;
-    Button inputBimbingan;
-    Button listDosen;
+    LinearLayout inputBimbingan;
+    LinearLayout listDosen;
 
     String idTim;
 
@@ -44,8 +45,8 @@ public class BimbinganFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.bimbingan,container,false);
         rv = (RecyclerView)rootView.findViewById(R.id.list_bimbingan_rv);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        inputBimbingan = (Button)rootView.findViewById(R.id.bimbingan_inputbtn);
-        listDosen = (Button)rootView.findViewById(R.id.bimbingan_dosenbtn);
+        inputBimbingan = (LinearLayout) rootView.findViewById(R.id.bimbingan_inputbtn);
+        listDosen = (LinearLayout) rootView.findViewById(R.id.bimbingan_dosenbtn);
         inputBimbingan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +65,8 @@ public class BimbinganFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        idTim = getArguments().getString("idTim");
-        getData();
+//        idTim = getArguments().getString("idTim");
+//        getData();
 
     }
     private void getData(){

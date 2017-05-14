@@ -2,6 +2,7 @@ package com.example.fandyaditya.silomba.Bimbingan;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,15 @@ public class DetailBimbingan extends AppCompatActivity {
         String idBimbingan = bundle.getString("idBimbingan");
 
         getData(idBimbingan);
+        getSupportActionBar().setTitle("Bikin Bimbingan");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
     }
 
     private void getData(final String idBimbingan){

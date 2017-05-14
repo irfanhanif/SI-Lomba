@@ -2,6 +2,7 @@ package com.example.fandyaditya.silomba.Bimbingan;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,17 @@ public class BikinBimbingan extends AppCompatActivity {
         idDosbing = bundle.getString("idDosbing");
         simpan.setOnClickListener(op);
         upload.setOnClickListener(op);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Bikin Bimbingan");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
     }
 
     View.OnClickListener op = new View.OnClickListener() {

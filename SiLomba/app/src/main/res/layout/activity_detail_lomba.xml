@@ -22,10 +22,10 @@
 
             <ImageView
                 android:id="@+id/detail_lomba_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:src="@color/colorAccent"/>
+                android:src="@mipmap/icon_lomba"/>
             <LinearLayout
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
@@ -121,27 +121,31 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Website"/>
+                    android:text="Syarat Lomba"/>
                 <TextView
                     android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:text=":"/>
                 <TextView
-                    android:id="@+id/detail_lomba_web"
+                    android:id="@+id/detail_lomba_syarat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="www.somesite.com"/>
+                    android:text="Syarat Lomba"/>
             </LinearLayout>
             <Button
                 android:id="@+id/detail_lomba_ikutserta_Btn"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ikut Serta"/>
+                android:text="Ikut Serta"
+                style="@style/myButton"/>
             <Button
                 android:id="@+id/detail_lomba_listtim_btn"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="List Tim Ikut Serta"/>
+                android:text="List Tim Ikut Serta"
+                style="@style/myButton"/>
         </LinearLayout>
 
     </ScrollView>

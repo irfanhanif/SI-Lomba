@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -38,7 +39,7 @@ public class RequestCalonAnggota extends AppCompatActivity {
     }
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/listrequest", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response);
@@ -52,7 +53,7 @@ public class RequestCalonAnggota extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idTim",idTim);
+                param.put("id_tim",idTim);
                 return param;
             }
         };

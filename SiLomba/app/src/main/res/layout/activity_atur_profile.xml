@@ -15,10 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Nama "/>
+            android:text="Nama "
+            android:id="@+id/textView2" />
+
         <EditText
             android:id="@+id/atur_profile_nama"
             android:layout_width="match_parent"
@@ -30,7 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Jurusan "/>
         <EditText
@@ -44,13 +47,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Angkatan"/>
+            android:text="Password"/>
         <EditText
-            android:id="@+id/atur_profile_angkatan"
+            android:id="@+id/atur_profile_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             />
     </LinearLayout>
     <LinearLayout
@@ -58,7 +62,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Ulangi Password"/>
+        <EditText
+            android:id="@+id/atur_profile_ulangipassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Upload Foto"/>
         <Button
@@ -73,5 +92,6 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="Simpan"
+       style="@style/myButton"
        />
 </LinearLayout>

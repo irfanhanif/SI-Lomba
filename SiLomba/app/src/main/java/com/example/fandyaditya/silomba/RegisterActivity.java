@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText username;
     EditText password;
     EditText ulangiPassword;
     EditText namaUser;
@@ -35,7 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        username = (EditText)findViewById(R.id.register_username);
         password = (EditText)findViewById(R.id.register_password);
         ulangiPassword = (EditText)findViewById(R.id.register_ulangipassword);
         namaUser = (EditText)findViewById(R.id.register_nama);
@@ -51,18 +49,21 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     private void errorChecking(){
-        if(username.length()<=3 || password.length()<=3){
-            Toast.makeText(getBaseContext(),"username atau password kurang panjang",Toast.LENGTH_SHORT).show();
+        if(nrpUser.length()<=3 || password.length()<=3){
+            Toast.makeText(getBaseContext(),"nrp atau password kurang panjang",Toast.LENGTH_SHORT).show();
         }
-        else if(namaUser.length()==0||nrpUser.length()==0){
+        else if(namaUser.length()==0){
             Toast.makeText(getBaseContext(),"Nama dan NRP harus diisi!!",Toast.LENGTH_LONG).show();
+        }
+        else if(password.getText().toString().compareTo(ulangiPassword.getText().toString())!=0){
+            Toast.makeText(getBaseContext(),"Password tidak sama!!",Toast.LENGTH_LONG).show();
         }
         else {
             register();
         }
     }
     private void register(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 validate(response);
@@ -77,10 +78,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("username",username.getText().toString().trim());
-                param.put("password",username.getText().toString().trim());
-                param.put("nama",namaUser.getText().toString().trim());
                 param.put("nrp",nrpUser.getText().toString().trim());
+                param.put("password",password.getText().toString().trim());
+                param.put("nama",namaUser.getText().toString().trim());
                 param.put("jurusan",jurusan.getSelectedItem().toString());
                 return param;
             }
