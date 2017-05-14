@@ -27,4 +27,20 @@ TimIkutLomba.prototype.registerTeam = function(req){
   return ikut_lomba.save()
 }
 
+TimIkutLomba.prototype.certainCompetition = function(req){
+  var tim = require('../Model/tim');
+  var Tim = new tim();
+
+  this.TimIkutLomba.belongsTo(Tim.Tim, {foreignKey: 'id_tim'});
+
+  return this.TimIkutLomba.findAll({
+    include: [{
+      model: Tim.Tim
+    }],
+    where: {
+      id_lomba: req.id_lomba
+    }
+  });
+}
+
 module.exports = TimIkutLomba;
