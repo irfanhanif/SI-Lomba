@@ -37,6 +37,10 @@ router.post('/listtim', function(req, res, next){
   var tim = new TimController();
   tim.listTim(res, req.body);
 });
+router.post('/ikutlomba', function(req, res, next){
+  var tim = new TimController();
+  tim.ikutLomba(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){

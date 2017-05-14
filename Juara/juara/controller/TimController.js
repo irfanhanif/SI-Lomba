@@ -46,4 +46,17 @@ TimController.prototype.listTim = function(res, req){
   });
 }
 
+TimController.prototype.ikutLomba = function(res, req){
+  this.tim_ikut_lomba = require('../Model/tim_ikut_lomba');
+  var tim_ikut_lomba = new this.tim_ikut_lomba();
+  tim_ikut_lomba.registerTeam(req).then(function(result){
+    var ret = {"status": "Input berhasil!"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    var ret = {"status": "failed"};
+    res.send(ret);
+  });
+}
+
 module.exports = TimController;
