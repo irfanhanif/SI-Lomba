@@ -27,4 +27,13 @@ RequestTim.prototype.newRequest = function(req){
   return new_request.save()
 }
 
+RequestTim.prototype.deleteRequest = function(req){
+  return this.RequestTim.destroy({
+    where: {
+      nrp: req.nrp,
+      id_tim: req.id_tim
+    }
+  });
+}
+
 module.exports = RequestTim;

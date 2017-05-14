@@ -36,4 +36,12 @@ AnggotaTim.prototype.getJoinedTim = function(req){
   });
 }
 
+AnggotaTim.prototype.insertNewMember = function(req){
+  var new_member = this.AnggotaTim.build({
+    nrp: req.nrp,
+    id_tim: req.id_tim
+  });
+  return new_member.save()
+}
+
 module.exports = AnggotaTim;
