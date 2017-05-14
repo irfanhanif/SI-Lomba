@@ -10,6 +10,19 @@ TimController.prototype.certainTeam = function(res, req){
   });
 }
 
+TimController.prototype.requestToJoinTeam = function(res, req){
+  this.request_tim = require('../Model/request_tim');
+  var request = new this.request_tim();
+  request.newRequest(req).then(function(result){
+    var ret = {"status": "Request berhasil!"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    var ret = {"status": "failed"};
+    res.send(ret);
+  });
+}
+
 TimController.prototype.getTimData = function(res, req){
   var tim = new this.tim();
   var my_team = null;

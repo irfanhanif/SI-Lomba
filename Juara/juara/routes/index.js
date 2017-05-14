@@ -45,6 +45,10 @@ router.post('/listtimikutserta', function(req, res, nect){
   var tim = new TimController();
   tim.certainTeam(res, req.body);
 });
+router.post('/requesttim', function(req, res, nect){
+  var tim = new TimController();
+  tim.requestToJoinTeam(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){
