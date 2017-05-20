@@ -27,4 +27,16 @@ Lomba.prototype.getAllLomba = function(req){
   return this.Lomba.findAll();
 }
 
+User.prototype.insertNew = function(req){
+  var new_lomba = this.User.build({
+    nama_lomba: req.nama_lomba,
+    penyelenggara: req.penyelenggara,
+    kategori: req.kategori,
+    hadiah: req.hadiah,
+    syarat: req.syarat,
+    deskiripsi_lomba: req.deskiripsi_lomba
+  });
+  return new_lomba.save()
+}
+
 module.exports = Lomba;

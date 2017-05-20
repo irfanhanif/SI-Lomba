@@ -17,4 +17,16 @@ LombaController.prototype.getDosbing = function(res, req){
   });
 }
 
+LombaController.prototype.insertLomba = function(res, req){
+  var lomba = new this.lomba();
+  tim.insertNew(req).then(function(result){
+    var ret = {"status": "success"};
+    res.send(ret);
+  })
+  .catch(function(err){
+    var ret = {"status": "failed"};
+    res.send(ret);
+  });
+}
+
 module.exports = LombaController;
