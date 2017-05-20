@@ -36,7 +36,7 @@ User.prototype.changeUserProfile = function(req){
 
 User.prototype.checkUserAccount = function(nrp, password){
   return this.User.findAll({
-    attributes: ['nrp', 'password'],
+    attributes: ['nrp', 'password', 'status_user'],
     where: {
       nrp: nrp,
       password: password
