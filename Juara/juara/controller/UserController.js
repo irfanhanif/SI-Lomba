@@ -6,7 +6,10 @@ UserController.prototype.loginCheck = function(res, req){
   var user = new this.user();
   user.checkUserAccount(req.nrp, req.password).then(function(result){
     if(result.length > 0){
-      var ret = {"status": "success"};
+      var ret = {
+        "status": "success",
+        "status_user": result[0].dataValues.status_user
+      };
       res.send(ret);
     }
     else{
