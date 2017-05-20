@@ -72,4 +72,10 @@ router.post('/listlomba', function(req, res, next){
   lomba.getLomba(res, req.body);
 });
 
+/* Routing Dosbing */
+router.post('/getdosbing', function(req, res, next){
+  var lomba = new LombaController();
+  lomba.getDosbing(res, req.body);
+});
+
 module.exports = router;
