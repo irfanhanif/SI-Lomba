@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -30,16 +33,16 @@ public class ListLombaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.list_lomba,container,false);
         rv = (RecyclerView)rootView.findViewById(R.id.list_lomba_rv);
         rv.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        getData();
         return rootView;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData();
     }
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/listlomba", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response);
@@ -50,7 +53,8 @@ public class ListLombaFragment extends Fragment {
 
             }
         });
-
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
     private void fetchData(String response){
         ParseJSON pj = new ParseJSON(response);

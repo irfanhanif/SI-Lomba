@@ -1,10 +1,16 @@
 package com.example.fandyaditya.silomba.ListLomba;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,8 +26,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
+import com.example.fandyaditya.silomba.PengaturanTim.ListTim.ListPengaturanTimObjek;
+import com.example.fandyaditya.silomba.PengaturanTim.ListTim.PengaturanTimAdapter;
 import com.example.fandyaditya.silomba.R;
+import com.example.fandyaditya.silomba.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,14 +45,22 @@ public class DetailLomba extends AppCompatActivity {
     TextView kategoriLomba;
     TextView hadiahLomba;
     TextView deskripsiLomba;
-    TextView linkLomba;
+    TextView syaratLomba;
     Button ikutSertaBtn;
     Button listTimBtn;
     Bundle bundle;
 
-    String idLomba;
-    String idTim;
-    public static String idUser;
+    public static String idLomba;
+    String namaLombaVal;
+    String kategoriLombaVal;
+    String syaratLombaVal;
+    String deskripsiLombaVal;
+    String hadiahLombaVal;
+    String penyelenggaraVal;
+
+    RecyclerView rv;
+
+    String idUser;
 
 
     @Override
@@ -56,25 +74,54 @@ public class DetailLomba extends AppCompatActivity {
         kategoriLomba = (TextView)findViewById(R.id.detail_lomba_kategori);
         hadiahLomba = (TextView)findViewById(R.id.detail_lomba_hadiah);
         deskripsiLomba = (TextView)findViewById(R.id.detail_lomba_deskripsi);
-        linkLomba = (TextView)findViewById(R.id.detail_lomba_web);
+        syaratLomba = (TextView)findViewById(R.id.detail_lomba_syarat);
         ikutSertaBtn = (Button)findViewById(R.id.detail_lomba_ikutserta_Btn);
         listTimBtn = (Button)findViewById(R.id.detail_lomba_listtim_btn);
         bundle = getIntent().getExtras();
         idLomba = bundle.getString("idLomba");
-        idTim = bundle.getString("idTim");
-        idUser = bundle.getString("idUser");
+        namaLombaVal = bundle.getString("namaLomba");
+        kategoriLombaVal = bundle.getString("kategoriLomba");
+        syaratLombaVal = bundle.getString("syaratLomba");
+        deskripsiLombaVal = bundle.getString("deskripsiLomba");
+        hadiahLombaVal = bundle.getString("hadiahLomba");
+        penyelenggaraVal = bundle.getString("penyelenggaraLomba");
+
+        Session session = new Session(getBaseContext());
+        idUser = session.getPreferences();
+
+//        idTim = bundle.getString("idTim");
+//        idUser = bundle.getString("idUser");
 
         listTimBtn.setOnClickListener(op);
         ikutSertaBtn.setOnClickListener(op);
 
-        getData();
+//        getData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Detail Lomba");
+        setView();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
+    }
+
+    private void setView(){
+        namaLomba.setText(namaLombaVal);
+        kategoriLomba.setText(kategoriLombaVal);
+        syaratLomba.setText(syaratLombaVal);
+        deskripsiLomba.setText(deskripsiLombaVal);
+        hadiahLomba.setText(hadiahLombaVal);
+        penyelenggaraLomba.setText(penyelenggaraVal);
     }
     View.OnClickListener op = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.detail_lomba_listtim_btn:openIntent(ListTim.class);break;
-                case R.id.detail_lomba_ikutserta_Btn:ikutSerta();break;
+                case R.id.detail_lomba_ikutserta_Btn:openDialog();break;
             }
         }
     };
@@ -113,7 +160,7 @@ public class DetailLomba extends AppCompatActivity {
             deskripsiLomba.setText(data.get(4));
             Glide.with(this).load(data.get(5)).into(lombaImg);
         }
-        else{
+        else if(statusCode==1){
             String status = pj.statusCodeParse();
             if(status.equals("success")){
                 Toast.makeText(getBaseContext(),"Ikut Lomba Sukses",Toast.LENGTH_SHORT).show();
@@ -122,12 +169,24 @@ public class DetailLomba extends AppCompatActivity {
             else
                 Toast.makeText(getBaseContext(),"Ikut Lomba Gagal",Toast.LENGTH_SHORT).show();
         }
+        else{
+            List<ListPengaturanTimObjek> data = pj.listTimParse("other");
+            PengaturanTimAdapter pengaturanTimAdapter = new PengaturanTimAdapter(data,getBaseContext(),"listikuttim");
+            rv.setAdapter(pengaturanTimAdapter);
+        }
     }
-    private void ikutSerta(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "somuerl.com", new Response.Listener<String>() {
+    private void openIntent(Class page){
+        Bundle bundle = new Bundle();
+        bundle.putString("idLomba",idLomba);
+        Intent myIntent = new Intent(getBaseContext(),page);
+        myIntent.putExtras(bundle);
+        startActivityForResult(myIntent,0);
+    }
+    private void showListTim(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip + "/listtim", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                fetchData(response, 1);
+                fetchData(response,2);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -139,16 +198,26 @@ public class DetailLomba extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idTim",idTim);
-                param.put("idLomba",idLomba);
+                param.put("nrp",idUser);
                 return param;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-    private void openIntent(Class page){
-        Intent myIntent = new Intent(getBaseContext(),page);
-        startActivityForResult(myIntent,0);
+    private void openDialog(){
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_ikutlomba,null);
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        myDialog.setView(v);
+        rv = (RecyclerView)v.findViewById(R.id.dialog_ikutlomba_rv);
+        rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        showListTim();
+        myDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        myDialog.show();
     }
 }

@@ -38,13 +38,31 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:inputType="textPassword"/>
-
     <Button
         android:id="@+id/login_btn"
         android:layout_width="200dp"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:text="login"
+        style="@style/myButton"
         android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum punya akun ? "/>
+        <TextView
+            android:id="@+id/login_rgstrbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register disini!"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
 
 </LinearLayout>

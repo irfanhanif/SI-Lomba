@@ -1,11 +1,15 @@
 package com.example.fandyaditya.silomba;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInstaller;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -15,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Profile.ProfileFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText nrp;
     EditText password;
     Button loginBtn;
+    TextView registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,14 @@ public class LoginActivity extends AppCompatActivity {
         nrp = (EditText)findViewById(R.id.login_nrp);
         password = (EditText)findViewById(R.id.login_password);
         loginBtn = (Button)findViewById(R.id.login_btn);
+        registerBtn = (TextView)findViewById(R.id.login_rgstrbtn);
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPage(RegisterActivity.class);
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void login(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "10.151.12.235:3000/login", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/login", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 validate(response);
@@ -80,7 +99,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openPage(Class page){
+
+        Session session = new Session(getBaseContext());
         Intent myIntent = new Intent(getBaseContext(),page);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("idUser",nrp.getText().toString());
+//        myIntent.putExtras(bundle);
+        session.editPreferences(nrp.getText().toString());
         startActivity(myIntent);
     }
 }

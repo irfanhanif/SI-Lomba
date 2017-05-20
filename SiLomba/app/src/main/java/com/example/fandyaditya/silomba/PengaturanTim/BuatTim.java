@@ -2,6 +2,7 @@ package com.example.fandyaditya.silomba.PengaturanTim;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
+import com.example.fandyaditya.silomba.Session;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +49,8 @@ public class BuatTim extends AppCompatActivity {
         bikinBtn = (Button)findViewById(R.id.buat_tim_buat_btn);
 
         bundle = getIntent().getExtras();
-        idUser = bundle.getString("idUser");
+        Session session = new Session(getBaseContext());
+        idUser = session.getPreferences();
 
         browseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +64,16 @@ public class BuatTim extends AppCompatActivity {
                 insert();
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Buat Tim");
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
     }
 
     private void uploadImg(){
@@ -67,7 +81,7 @@ public class BuatTim extends AppCompatActivity {
     }
 
     private void insert(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "somuerl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/createteam", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 validate(response);
@@ -82,11 +96,11 @@ public class BuatTim extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idUser",idUser);
-                param.put("namaTim",namaTim.getText().toString());
-                param.put("maxAnggota",maxAnggota.getText().toString());
-                param.put("deskripsiTim",deskripsiTim.getText().toString());
-                param.put("fileTimPic",fileTimPic);
+                param.put("nrp",idUser);
+                param.put("nama_tim",namaTim.getText().toString());
+                param.put("maksimal_anggota",maxAnggota.getText().toString());
+                param.put("deskripsi_tim",deskripsiTim.getText().toString());
+                param.put("file_fotoprofil_tim","null");
                 return param;
             }
         };
@@ -100,11 +114,11 @@ public class BuatTim extends AppCompatActivity {
         String status = pj.statusCodeParse();
 
         if(status.equals("success")){
-            Toast.makeText(getBaseContext(),"Bikin Bimbingan Sukses",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"Bikin Tim Sukses",Toast.LENGTH_LONG).show();
             finish();
         }
         else{
-            Toast.makeText(getBaseContext(),"Gagal Bikin Bimbingan",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"Gagal Bikin Tim",Toast.LENGTH_LONG).show();
         }
     }
 }

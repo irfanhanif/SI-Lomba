@@ -2,6 +2,7 @@ package com.example.fandyaditya.silomba.ListLomba;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
+import com.example.fandyaditya.silomba.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,20 +42,22 @@ public class ListTimAdapter extends RecyclerView.Adapter<ListTimAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_lomba_objek,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_tim_objek,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListTimObjek listTimObjek = itemList.get(position);
-
+        Session session = new Session(context);
+        final String nrp = session.getPreferences();
         final String idTim = listTimObjek.getId();
+
         holder.namaTim.setText(listTimObjek.getNama());
         holder.sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRequest(idTim);
+                sendRequest(idTim,nrp);
             }
         });
     }
@@ -72,8 +77,8 @@ public class ListTimAdapter extends RecyclerView.Adapter<ListTimAdapter.ViewHold
         }
     }
 
-    private void sendRequest(final String idTim){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+    private void sendRequest(final String idTim, final String nrp){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/requesttim", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 validate(response);
@@ -89,7 +94,7 @@ public class ListTimAdapter extends RecyclerView.Adapter<ListTimAdapter.ViewHold
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
                 param.put("idTim",idTim);
-                param.put("idUser",DetailLomba.idUser);
+                param.put("nrp",nrp);
                 return param;
             }
         };
@@ -100,7 +105,7 @@ public class ListTimAdapter extends RecyclerView.Adapter<ListTimAdapter.ViewHold
     private void validate(String response){
         ParseJSON pj = new ParseJSON(response);
         String status = pj.statusCodeParse();
-        if(status.equals("success")){
+        if(status.equals("Request berhasil!")){
             Toast.makeText(context,"Request anggota berhasil dikirim",Toast.LENGTH_LONG).show();
         }
         else Toast.makeText(context,"Gagal Mengirim request anggota",Toast.LENGTH_LONG).show();

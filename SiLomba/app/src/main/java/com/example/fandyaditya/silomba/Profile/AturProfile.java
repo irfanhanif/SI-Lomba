@@ -1,7 +1,9 @@
 package com.example.fandyaditya.silomba.Profile;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +16,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
+import com.example.fandyaditya.silomba.MainActivity;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
+import com.example.fandyaditya.silomba.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +30,8 @@ public class AturProfile extends AppCompatActivity {
 
     EditText namaProfile;
     EditText jurusanProfile;
+    EditText passwordProfile;
+    EditText ulangiPassword;
     Button uploadBtn;
     Button simpanBtn;
     Bundle bundle;
@@ -39,26 +46,51 @@ public class AturProfile extends AppCompatActivity {
 
         namaProfile = (EditText)findViewById(R.id.atur_profile_nama);
         jurusanProfile = (EditText)findViewById(R.id.atur_profile_jurusan);
+        passwordProfile = (EditText)findViewById(R.id.atur_profile_password);
+        ulangiPassword = (EditText)findViewById(R.id.atur_profile_ulangipassword);
         uploadBtn = (Button)findViewById(R.id.atur_profile_uploadbtn);
         simpanBtn = (Button)findViewById(R.id.atur_profile_simpanbtn);
 
-        getData();
         simpanBtn.setOnClickListener(op);
         uploadBtn.setOnClickListener(op);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Atur Profile");
+
+        Session session = new Session(getBaseContext());
+
+        idUser = session.getPreferences();
+//        Bundle bundle = getIntent().getExtras();
+//        idUser = bundle.getString("idUser");
+        getData();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
     }
 
     View.OnClickListener op = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.atur_profile_simpanbtn: update();break;
+                case R.id.atur_profile_simpanbtn:{
+                    if(passwordProfile.getText().toString().compareTo(ulangiPassword.getText().toString())==0){
+                        update();
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),"Password tidak sama",Toast.LENGTH_SHORT).show();
+                    }
+                }
                 case R.id.atur_profile_uploadbtn: uploadImg();break;
             }
         }
     };
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/editprofile", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response,"get");
@@ -73,7 +105,7 @@ public class AturProfile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idUser",idUser);
+                param.put("nrp",idUser);
                 return param;
             }
         };
@@ -83,7 +115,7 @@ public class AturProfile extends AppCompatActivity {
     }
 
     private void update(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/changeprofile", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response,"post");
@@ -100,6 +132,8 @@ public class AturProfile extends AppCompatActivity {
                 Map<String,String> param = new HashMap<>();
                 param.put("nama",namaProfile.getText().toString());
                 param.put("jurusan",jurusanProfile.getText().toString());
+                param.put("password",passwordProfile.getText().toString());
+                param.put("nrp",idUser);
 //                param.put("fileProfPic",profPic.getBytes().toString());
                 return param;
             }
@@ -113,19 +147,24 @@ public class AturProfile extends AppCompatActivity {
     }
 
     private void fetchData(String response,String code){
+
         ParseJSON pj = new ParseJSON(response);
 
         if (code.equals("get")){
             List<String> fetchGet = pj.detailUserParse();
+
             namaProfile.setText(fetchGet.get(0));
             jurusanProfile.setText(fetchGet.get(1));
+            passwordProfile.setText(fetchGet.get(2));
 //            angkatanProfile.setText(fetchGet.get(2));
-            profPic = fetchGet.get(3);
+//            profPic = fetchGet.get(3);
         }
         else{
             String status = pj.statusCodeParse();
-            if(status.equals("success")){
+            if(status.equals("Perubahan data berhasil!")){
                 Toast.makeText(getBaseContext(),"Profil Berhasil diedit",Toast.LENGTH_LONG).show();
+//                setResult(AturProfile.RESULT_OK);
+                finish();
             }
             else Toast.makeText(getBaseContext(),"Gagal Edit Profil",Toast.LENGTH_LONG).show();
         }

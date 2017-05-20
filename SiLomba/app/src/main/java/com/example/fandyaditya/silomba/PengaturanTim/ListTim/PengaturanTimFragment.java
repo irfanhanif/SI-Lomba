@@ -1,10 +1,13 @@
-package com.example.fandyaditya.silomba.PengaturanTim;
+package com.example.fandyaditya.silomba.PengaturanTim.ListTim;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +24,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.fandyaditya.silomba.Konstanta;
+import com.example.fandyaditya.silomba.ListLomba.ListLombaObjek;
 import com.example.fandyaditya.silomba.ParseJSON;
+import com.example.fandyaditya.silomba.PengaturanTim.BuatTim;
 import com.example.fandyaditya.silomba.PengaturanTim.RequestCalon.RequestCalonAnggota;
 import com.example.fandyaditya.silomba.R;
+import com.example.fandyaditya.silomba.Session;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,49 +46,36 @@ import java.util.Map;
 
 public class PengaturanTimFragment extends Fragment {
 
-    ImageView timImg;
-    TextView namaTim;
-    TextView deskripsiTim;
-    ImageView anggota1Img;
-    ImageView anggota2Img;
-    ImageView anggota3Img;
-    ImageView anggota4Img;
-    ImageView anggota5Img;
-    ImageView lombaImg;
-    Button aturTim;
-    Button requestCalon;
-    Bundle bundle;
 
-    String idTim;
+    RecyclerView rvKetua;
+    RecyclerView rvAnggota;
+
+    Button bikinTim;
+    String idUser;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pengaturan_tim,container,false);
-        timImg = (ImageView) rootView.findViewById(R.id.tim_img);
-        namaTim = (TextView) rootView.findViewById(R.id.tim_nama);
-        deskripsiTim = (TextView) rootView.findViewById(R.id.tim_deskripsi);
-        anggota1Img = (ImageView) rootView.findViewById(R.id.tim_anggota_1);
-        anggota2Img = (ImageView) rootView.findViewById(R.id.tim_anggota_2);
-        anggota3Img = (ImageView) rootView.findViewById(R.id.tim_anggota_3);
-        anggota4Img = (ImageView) rootView.findViewById(R.id.tim_anggota_4);
-        anggota5Img = (ImageView) rootView.findViewById(R.id.tim_anggota_5);
-        lombaImg = (ImageView) rootView.findViewById(R.id.tim_lomba_img);
-        aturTim = (Button) rootView.findViewById(R.id.atur_tim_btn);
-        requestCalon = (Button) rootView.findViewById(R.id.request_calon_btn);
 
-        aturTim.setOnClickListener(new View.OnClickListener() {
+        rvKetua = (RecyclerView) rootView.findViewById(R.id.pengaturan_timrv_ketua);
+        rvAnggota = (RecyclerView)rootView.findViewById(R.id.pengaturan_timrv_anggota);
+
+        rvKetua.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        rvAnggota.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        bikinTim = (Button)rootView.findViewById(R.id.pengaturan_tim_btn);
+        Session session = new Session(getContext());
+
+        idUser = session.getPreferences();
+
+        bikinTim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openIntent(AturTim.class);
+                openIntent(BuatTim.class);
             }
         });
-        requestCalon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openIntent(RequestCalonAnggota.class);
-            }
-        });
+
+        getData();
 
         return rootView;
     }
@@ -85,13 +83,13 @@ public class PengaturanTimFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData();
+//        getData();
 //        bundle = g
 
     }
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/detailtim", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response);
@@ -106,7 +104,7 @@ public class PengaturanTimFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idTim",idTim);
+                param.put("nrp",idUser);
                 return param;
             }
         };
@@ -116,13 +114,27 @@ public class PengaturanTimFragment extends Fragment {
 
     private void fetchData(String response){
         ParseJSON pj = new ParseJSON(response);
-        List<String> mainData = pj.detailTimParse("maindata");
-        List<String> secondData = pj.detailTimParse("seconddata");
+//        try {
+//            JSONObject jsonObject = new JSONObject(response);
+//            JSONArray jsonArray = jsonObject.getJSONArray("joined_team");
+//            for(int i=0;i<jsonArray.length();i++){
+//                JSONObject jRow = jsonArray.getJSONObject(i);
+//                JSONObject jsonObject1 = jRow.getJSONObject("tim");
+//                Log.d("testing", jsonObject1.getString("nama_tim"));
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
-        namaTim.setText(mainData.get(0));
-        deskripsiTim.setText(mainData.get(1));
-        Glide.with(getContext()).load(mainData.get(3)).into(timImg);
-        Glide.with(getContext()).load(mainData.get(5)).into(lombaImg);
+
+        List<ListPengaturanTimObjek> dataTimku = pj.listTimParse("my_team");
+        List<ListPengaturanTimObjek> dataTimMu = pj.listTimParse("joined_team");
+
+        PengaturanTimAdapter timKuAdapter = new PengaturanTimAdapter(dataTimku,getContext(),"pengaturantim");
+        PengaturanTimAdapter timMuAdapter = new PengaturanTimAdapter(dataTimMu,getContext(),"pengaturantim");
+
+        rvKetua.setAdapter(timKuAdapter);
+        rvAnggota.setAdapter(timMuAdapter);
     }
 
     private void openIntent(Class x){

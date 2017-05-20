@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fandyaditya.silomba">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,27 +13,36 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ListLomba.DetailLomba"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".PengaturanTim.BuatTim"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".PengaturanTim.RequestCalon.RequestCalonAnggota"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".Bimbingan.DetailBimbingan"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".Bimbingan.Dosen.ListDosen"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".Bimbingan.BikinBimbingan"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".Profile.AturProfile"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".PengaturanTim.AturTim"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ListLomba.ListTim"
+            android:theme="@style/myActivityStyle"/>
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListLomba.ListLombaObjek$DetailLomba" />
-        <activity android:name=".ListLomba.ListLombaObjek$BuatTim" />
-        <activity android:name=".PengaturanTim.RequestCalon.RequestCalonAnggota" />
-        <activity android:name=".Bimbingan.BimbinganObjek$DetailBimbingan" />
-        <activity android:name=".Bimbingan.Dosen.ListDosen" />
-        <activity android:name=".Bimbingan.BikinBimbingan" />
-        <activity android:name=".Bimbingan.DetailBimbingan" />
-        <activity android:name=".Profile.AturProfile" />
-        <activity android:name=".ListLomba.DetailLomba" />
-        <activity android:name=".PengaturanTim.AturTim" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListLomba.ListTim" />
-        <activity android:name=".SplashScreen" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".PengaturanTim.DetailTim"
+            android:theme="@style/myActivityStyle"/>
     </application>
 
 </manifest>

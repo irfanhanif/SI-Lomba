@@ -2,6 +2,8 @@ package com.example.fandyaditya.silomba.PengaturanTim;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -31,6 +34,11 @@ public class AturTim extends AppCompatActivity {
     String picTim;
 
     String idTim;
+    String namaTimVal;
+    String deskripsiTimVal;
+    String maxAnggota;
+    String profPic;
+    String tipeTim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,26 +48,52 @@ public class AturTim extends AppCompatActivity {
         deskripsiTim = (EditText)findViewById(R.id.atur_tim_deskripsi);
         browse = (Button)findViewById(R.id.atur_tim_browse);
         simpan = (Button)findViewById(R.id.atur_tim_simpanbtn);
-        bundle = getIntent().getExtras();
-        idTim = bundle.getString("idTim");
 
-        getData();
+        bundle = getIntent().getExtras();
+
+        idTim = bundle.getString("idTim");
+        namaTimVal = bundle.getString("namaTim");
+        maxAnggota = bundle.getString("maxAnggota");
+        deskripsiTimVal = bundle.getString("deskripsiTim");
+        profPic = bundle.getString("profPic");
+        tipeTim = bundle.getString("tipeTim");
+
         browse.setOnClickListener(op);
         simpan.setOnClickListener(op);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Atur Tim");
+
+//        getData();
+        setView();
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:finish();break;
+        }
+        return true;
     }
 
     View.OnClickListener op = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.atur_profile_simpanbtn:update();break;
+                case R.id.atur_tim_simpanbtn:update();break;
                 case R.id.atur_tim_browse:upload();break;
             }
         }
     };
 
+    private void setView(){
+        namaTim.setText(namaTimVal);
+        deskripsiTim.setText(deskripsiTimVal);
+    }
+
     private void update(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl", new Response.Listener<String>() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/editteam", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response,"post");
@@ -67,16 +101,18 @@ public class AturTim extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_SHORT).show();
             }
         })
         {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("namaTim",namaTim.getText().toString());
-                param.put("deskripsiTim",deskripsiTim.getText().toString());
-//                param.put("fileTimPic",picTim.getBytes().toString());
+                param.put("nama_tim",namaTim.getText().toString());
+                param.put("deskripsi_tim",deskripsiTim.getText().toString());
+                param.put("maksimal_anggota",maxAnggota);
+                param.put("file_fotoprofil_tim","null");
+                param.put("id_tim",idTim);
                 return param;
             }
         };
@@ -123,6 +159,7 @@ public class AturTim extends AppCompatActivity {
             String status = pj.statusCodeParse();
             if(status.equals("success")){
                 Toast.makeText(getBaseContext(),"Halaman tim Berhasil diedit",Toast.LENGTH_LONG).show();
+                finish();
             }
             else Toast.makeText(getBaseContext(),"Gagal Edit Halaman Tim",Toast.LENGTH_LONG).show();
         }

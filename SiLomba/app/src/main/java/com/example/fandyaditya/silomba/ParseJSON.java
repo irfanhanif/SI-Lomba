@@ -3,6 +3,8 @@ package com.example.fandyaditya.silomba;
 import com.example.fandyaditya.silomba.Bimbingan.BimbinganObjek;
 import com.example.fandyaditya.silomba.Bimbingan.Dosen.DosenObjek;
 import com.example.fandyaditya.silomba.ListLomba.ListLombaObjek;
+import com.example.fandyaditya.silomba.ListLomba.ListTimObjek;
+import com.example.fandyaditya.silomba.PengaturanTim.ListTim.ListPengaturanTimObjek;
 import com.example.fandyaditya.silomba.PengaturanTim.RequestCalon.RequestCalonObjek;
 
 import org.json.JSONArray;
@@ -29,8 +31,7 @@ public class ParseJSON {
 
         try {
             jsonObject = new JSONObject(json);
-            JSONObject statusSuccess = jsonObject.getJSONObject("status");
-            parseVal = statusSuccess.getString("status");
+            parseVal = jsonObject.getString("status");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -69,6 +70,71 @@ public class ParseJSON {
         }
         return parseVal;
     }
+    public List<ListPengaturanTimObjek> listTimParse(String param){
+        JSONObject jsonObject;
+        List <ListPengaturanTimObjek> parseVal = new ArrayList<>();
+        if(param.equals("my_team")){
+            try {
+                jsonObject = new JSONObject(json);
+                JSONArray jsonArray = jsonObject.getJSONArray("my_team");
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jRow = jsonArray.getJSONObject(i);
+                    ListPengaturanTimObjek listPengaturanTimObjek = new ListPengaturanTimObjek(
+                            jRow.getString("id_tim"),
+                            jRow.getString("nama_tim"),
+                            jRow.getString("maksimal_anggota"),
+                            jRow.getString("deskripsi_tim"),
+                            jRow.getString("file_fotoprofil_tim"),
+                            "ketua"
+                    );
+                    parseVal.add(listPengaturanTimObjek);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(param.equals("joined_team")){
+            try {
+                jsonObject = new JSONObject(json);
+                JSONArray jsonArray = jsonObject.getJSONArray("joined_team");
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jRow = jsonArray.getJSONObject(i);
+                    JSONObject rowTim = jRow.getJSONObject("tim");
+                    ListPengaturanTimObjek listPengaturanTimObjek = new ListPengaturanTimObjek(
+                            rowTim.getString("id_tim"),
+                            rowTim.getString("nama_tim"),
+                            rowTim.getString("maksimal_anggota"),
+                            rowTim.getString("deskripsi_tim"),
+                            rowTim.getString("file_fotoprofil_tim"),
+                            "anggota"
+                    );
+                    parseVal.add(listPengaturanTimObjek);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i=0;i<jsonArray.length();i++){
+                    JSONObject jRow = jsonArray.getJSONObject(i);
+                    ListPengaturanTimObjek listPengaturanTimObjek = new ListPengaturanTimObjek(
+                            jRow.getString("id_tim"),
+                            jRow.getString("nama_tim"),
+                            jRow.getString("maksimal_anggota"),
+                            jRow.getString("deskripsi_tim"),
+                            jRow.getString("file_fotoprofil_tim"),
+                            "other"
+                    );
+                    parseVal.add(listPengaturanTimObjek);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return parseVal;
+    }
     public List<String> detailTimParse(String param){
         JSONObject jsonObject;
         List<String> parseval = new ArrayList<>();
@@ -95,14 +161,17 @@ public class ParseJSON {
     }
     public List<String> detailUserParse(){
         JSONObject jsonObject;
+        JSONArray jsonArray;
         List<String>parseVal = new ArrayList<>();
-
         try {
-            jsonObject = new JSONObject(json);
+//            jsonObject = new JSONObject(json);
+            jsonArray = new JSONArray(json);
+            jsonObject = jsonArray.getJSONObject(0);
             parseVal.add(jsonObject.getString("nama"));
             parseVal.add(jsonObject.getString("jurusan"));
-            parseVal.add(jsonObject.getString("angkatan"));
-            parseVal.add(jsonObject.getString("file_profpic"));
+            parseVal.add(jsonObject.getString("password"));
+//            parseVal.add(jsonObject.getString("angkatan"));
+//            parseVal.add(jsonObject.getString("file_profpic"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -132,19 +201,17 @@ public class ParseJSON {
         return parseVal;
     }
     public List<RequestCalonObjek> listRequestCalon(){
-        JSONObject jsonObject;
+        JSONArray jsonArray;
         List<RequestCalonObjek> parseVal = new ArrayList<>();
 
         try {
-            jsonObject = new JSONObject(json);
-            JSONArray data = jsonObject.getJSONArray("data");
-            for (int i =0;i<data.length();i++){
-                JSONObject jRow = data.getJSONObject(i);
+            jsonArray = new JSONArray(json);
+            for (int i =0;i<jsonArray.length();i++){
+                JSONObject jRow = jsonArray.getJSONObject(i);
+                JSONObject jUser = jRow.getJSONObject("user");
                 RequestCalonObjek requestCalonObjek = new RequestCalonObjek(
-                        jRow.getString("id_request"),
-                        jRow.getString("id_user"),
-                        jRow.getString("nama"),
-                        jRow.getString("nama_job")
+                        jUser.getString("nrp"),
+                        jUser.getString("nama")
                 );
                 parseVal.add(requestCalonObjek);
             }
@@ -179,18 +246,37 @@ public class ParseJSON {
         List<ListLombaObjek> parseVal = new ArrayList<>();
 
         try {
-            jsonObject = new JSONObject(json);
-            JSONArray data = jsonObject.getJSONArray("data");
+            JSONArray data = new JSONArray(json);
             for(int i=0;i<data.length();i++){
                 JSONObject jRow = data.getJSONObject(i);
                 ListLombaObjek listLombaObjek = new ListLombaObjek(
                         jRow.getString("id_lomba"),
                         jRow.getString("nama_lomba"),
                         jRow.getString("penyelenggara"),
-                        jRow.getString("hadiah"),
-                        jRow.getString("file_fotolomba")
+                        jRow.getString("kategori"),
+                        jRow.getString("syarat"),
+                        jRow.getString("deskripsi_lomba"),
+                        jRow.getString("hadiah")
                 );
                 parseVal.add(listLombaObjek);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
+    public List<ListTimObjek> listTimIkutSerta(){
+        List <ListTimObjek> parseVal = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jRow = jsonArray.getJSONObject(i);
+                JSONObject jRowTim = jRow.getJSONObject("tim");
+                ListTimObjek listTimObjek = new ListTimObjek(
+                        jRowTim.getString("id_tim"),
+                        jRowTim.getString("nama_tim")
+                );
+                parseVal.add(listTimObjek);
             }
         } catch (JSONException e) {
             e.printStackTrace();

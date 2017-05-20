@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -47,24 +48,19 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         RequestCalonObjek requestCalonObjek = listItem.get(position);
 
-        final String idRequest = requestCalonObjek.getIdRequest();
         final String idUser = requestCalonObjek.getIdUser();
-        final String job = requestCalonObjek.getJob();
-        String strJob = "("+job+")";
 
         holder.nama.setText(requestCalonObjek.getNama());
-        holder.job.setText(strJob);
-
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionRequest(idRequest,idUser,job,"accept");
+                actionRequest(idUser,"accept");
             }
         });
         holder.reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionRequest(idRequest,idUser,job,"reject");
+                actionRequest(idUser,"reject");
             }
         });
 
@@ -77,19 +73,17 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nama;
-        private TextView job;
         private ImageView accept;
         private ImageView reject;
         public ViewHolder(View itemView) {
             super(itemView);
             nama = (TextView)itemView.findViewById(R.id.request_calon_objek_nama);
-            job = (TextView)itemView.findViewById(R.id.request_calon_objek_job);
             accept = (ImageView)itemView.findViewById(R.id.request_calon_objek_acc);
             reject = (ImageView)itemView.findViewById(R.id.request_calon_objek_rjt);
         }
     }
-    private void actionRequest(final String idRequest, final String idUser, final String idJob,final String code){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "someurl.com", new Response.Listener<String>() {
+    private void actionRequest(final String idUser,final String code){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/acceptrequest", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 validate(response,code);
@@ -104,8 +98,7 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idUser",idUser);
-                param.put("idJob",idJob);
+                param.put("nrp",idUser);
                 param.put("code",code);
                 return param;
             }
