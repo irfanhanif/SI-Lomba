@@ -65,15 +65,15 @@ router.post('/editteam', function(req, res, nect){
   var tim = new TimController();
   tim.editTeam(res, req.body);
 });
-router.post('/lombabaru', function(req, res, nect){
-  var tim = new TimController();
-  tim.insertLomba(res, req.body);
-});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){
   var lomba = new LombaController();
   lomba.getLomba(res, req.body);
+});
+router.post('/lombabaru', function(req, res, next){
+  var lomba = new LombaController();
+  lomba.insertLomba(res, req.body);
 });
 
 /* Routing Dosbing */
