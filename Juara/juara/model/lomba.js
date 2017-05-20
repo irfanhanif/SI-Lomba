@@ -27,8 +27,8 @@ Lomba.prototype.getAllLomba = function(req){
   return this.Lomba.findAll();
 }
 
-User.prototype.insertNew = function(req){
-  var new_lomba = this.User.build({
+Lomba.prototype.insertNew = function(req){
+  var new_lomba = this.Lomba.build({
     nama_lomba: req.nama_lomba,
     penyelenggara: req.penyelenggara,
     kategori: req.kategori,
