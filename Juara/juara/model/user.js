@@ -59,7 +59,7 @@ User.prototype.registerNewAccount = function(req){
 
 User.prototype.getAllData = function(req){
   return this.User.findAll({
-    attributes: ['password', 'nama', 'email', 'jurusan'],
+    attributes: ['password', 'nama', 'email', 'jurusan', 'file_fotoprofil'],
     where: {
       nrp: req.nrp
     }
