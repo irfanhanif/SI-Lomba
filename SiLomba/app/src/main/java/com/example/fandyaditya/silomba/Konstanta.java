@@ -5,5 +5,5 @@ package com.example.fandyaditya.silomba;
  */
 
 public class Konstanta {
-    public static String ip="http://192.168.0.20:3000";
+    public static String ip="http://192.168.1.18:3000";
 }

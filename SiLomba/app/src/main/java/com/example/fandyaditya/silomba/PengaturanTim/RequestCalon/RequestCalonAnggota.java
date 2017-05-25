@@ -25,7 +25,7 @@ public class RequestCalonAnggota extends AppCompatActivity {
     RecyclerView rv;
     Bundle bundle;
 
-    String idTim;
+    public static String idTim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

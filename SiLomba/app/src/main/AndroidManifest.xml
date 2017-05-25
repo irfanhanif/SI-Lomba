@@ -3,6 +3,7 @@
     package="com.example.fandyaditya.silomba">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,26 +14,35 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ListLomba.DetailLomba"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".PengaturanTim.BuatTim"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".PengaturanTim.RequestCalon.RequestCalonAnggota"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".Bimbingan.DetailBimbingan"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".Bimbingan.Dosen.ListDosen"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".Bimbingan.BikinBimbingan"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".Profile.AturProfile"
-            android:theme="@style/myActivityStyle"/>
-        <activity android:name=".PengaturanTim.AturTim"
-            android:theme="@style/myActivityStyle"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListLomba.DetailLomba"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".PengaturanTim.BuatTim"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".PengaturanTim.RequestCalon.RequestCalonAnggota"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".Bimbingan.DetailBimbingan"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".Bimbingan.Dosen.ListDosen"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".Bimbingan.BikinBimbingan"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".Profile.AturProfile"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".PengaturanTim.AturTim"
+            android:theme="@style/myActivityStyle" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListLomba.ListTim"
-            android:theme="@style/myActivityStyle"/>
+        <activity
+            android:name=".ListLomba.ListTim"
+            android:theme="@style/myActivityStyle" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +51,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".PengaturanTim.DetailTim"
-            android:theme="@style/myActivityStyle"/>
+        <activity
+            android:name=".PengaturanTim.DetailTim"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".TambahLomba"
+            android:theme="@style/myActivityStyle" />
+        <activity
+            android:name=".AdminActivity"
+            android:theme="@style/myActivityStyle" />
     </application>
 
 </manifest>

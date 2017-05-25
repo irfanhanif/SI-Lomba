@@ -106,22 +106,39 @@ public class DetailTim extends AppCompatActivity {
         int maxAnggotaTrue = Integer.parseInt(maxAnggota);
 
         if(maxAnggotaTrue==1){
-            anggota2Img.setVisibility(View.GONE);
-            anggota3Img.setVisibility(View.GONE);
-            anggota4Img.setVisibility(View.GONE);
-            anggota5Img.setVisibility(View.GONE);
+            anggota1Img.setImageResource(R.color.ijoAnggota);
+            anggota2Img.setImageResource(R.color.merahAnggota);
+            anggota3Img.setImageResource(R.color.merahAnggota);
+            anggota4Img.setImageResource(R.color.merahAnggota);
+            anggota5Img.setImageResource(R.color.merahAnggota);
         }
         else if(maxAnggotaTrue==2){
-            anggota3Img.setVisibility(View.GONE);
-            anggota4Img.setVisibility(View.GONE);
-            anggota5Img.setVisibility(View.GONE);
+            anggota1Img.setImageResource(R.color.ijoAnggota);
+            anggota2Img.setImageResource(R.color.ijoAnggota);
+            anggota3Img.setImageResource(R.color.merahAnggota);
+            anggota4Img.setImageResource(R.color.merahAnggota);
+            anggota5Img.setImageResource(R.color.merahAnggota);
         }
         else if(maxAnggotaTrue==3){
-            anggota4Img.setVisibility(View.GONE);
-            anggota5Img.setVisibility(View.GONE);
+            anggota1Img.setImageResource(R.color.ijoAnggota);
+            anggota2Img.setImageResource(R.color.ijoAnggota);
+            anggota3Img.setImageResource(R.color.ijoAnggota);
+            anggota4Img.setImageResource(R.color.merahAnggota);
+            anggota5Img.setImageResource(R.color.merahAnggota);
         }
         else if(maxAnggotaTrue==4){
-            anggota5Img.setVisibility(View.GONE);
+            anggota1Img.setImageResource(R.color.ijoAnggota);
+            anggota2Img.setImageResource(R.color.ijoAnggota);
+            anggota3Img.setImageResource(R.color.ijoAnggota);
+            anggota4Img.setImageResource(R.color.ijoAnggota);
+            anggota5Img.setImageResource(R.color.merahAnggota);
+        }
+        else {
+            anggota1Img.setImageResource(R.color.ijoAnggota);
+            anggota2Img.setImageResource(R.color.ijoAnggota);
+            anggota3Img.setImageResource(R.color.ijoAnggota);
+            anggota4Img.setImageResource(R.color.ijoAnggota);
+            anggota5Img.setImageResource(R.color.ijoAnggota);
         }
 
         if(tipeTim.equals("anggota")){

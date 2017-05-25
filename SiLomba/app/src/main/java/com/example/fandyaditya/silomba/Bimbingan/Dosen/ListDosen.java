@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 
@@ -36,7 +37,7 @@ public class ListDosen extends AppCompatActivity {
     }
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "someurl.com", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/getdosbing", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 fetchData(response);

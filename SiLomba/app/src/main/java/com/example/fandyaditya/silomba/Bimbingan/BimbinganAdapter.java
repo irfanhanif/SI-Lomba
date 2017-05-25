@@ -24,6 +24,7 @@ public class BimbinganAdapter extends RecyclerView.Adapter<BimbinganAdapter.View
     private Context context;
 
     public BimbinganAdapter(Context context, List<BimbinganObjek> listItem) {
+        this.context = context;
         this.listItem = listItem;
     }
 
@@ -37,12 +38,16 @@ public class BimbinganAdapter extends RecyclerView.Adapter<BimbinganAdapter.View
     public void onBindViewHolder(BimbinganAdapter.ViewHolder holder, int position) {
         BimbinganObjek bimbinganObjek = listItem.get(position);
         final String idBimbingan = bimbinganObjek.getId();
-        holder.tanggalBimbingan.setText(bimbinganObjek.getTanggal());
-        holder.deskripsiBimbingan.setText(bimbinganObjek.getComment());
+        final String idTim = bimbinganObjek.getIdTim();
+        final String tanggalBimbingan = bimbinganObjek.getTanggal();
+        final String deskripsiBimbingan = bimbinganObjek.getComment();
+        final String fileBimbingan = bimbinganObjek.getFileBimbingan();
+        holder.tanggalBimbingan.setText(tanggalBimbingan);
+        holder.deskripsiBimbingan.setText(deskripsiBimbingan);
         holder.listLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPage(idBimbingan);
+                openPage(idBimbingan,idTim,tanggalBimbingan,deskripsiBimbingan,fileBimbingan);
             }
         });
     }
@@ -64,10 +69,14 @@ public class BimbinganAdapter extends RecyclerView.Adapter<BimbinganAdapter.View
             listLayout = (LinearLayout)itemView.findViewById(R.id.bimbingna_objek_lay);
         }
     }
-    private void openPage(String id){
+    private void openPage(String id,String idTim,String tanggal, String comment, String file){
         Intent myIntent = new Intent(context, DetailBimbingan.class);
         Bundle bundle = new Bundle();
-        bundle.putString("id",id);
+        bundle.putString("idBimbingan",id);
+        bundle.putString("idTim",idTim);
+        bundle.putString("tanggalBimbingan",tanggal);
+        bundle.putString("comment",comment);
+        bundle.putString("file",file);
         myIntent.putExtras(bundle);
         context.startActivity(myIntent);
     }

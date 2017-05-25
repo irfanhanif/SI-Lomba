@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.fandyaditya.silomba.ListLomba.ListLombaObjek$DetailLomba">
+    tools:context="com.example.fandyaditya.silomba.ListLomba.DetailLomba">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,15 +35,17 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Nama"/>
-                <TextView
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:text=":"/>
+
                 <TextView
                     android:id="@+id/detail_lomba_nama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nama Lomba"/>
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -147,7 +149,5 @@
                 android:text="List Tim Ikut Serta"
                 style="@style/myButton"/>
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

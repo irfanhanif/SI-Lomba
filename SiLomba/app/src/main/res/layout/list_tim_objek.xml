@@ -26,7 +26,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_send_black_24dp"
                 android:layout_gravity="bottom"/>
-
         </LinearLayout>
 
 

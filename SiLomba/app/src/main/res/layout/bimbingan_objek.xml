@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="@dimen/activity_vertical_margin"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/bimbingna_objek_lay"
@@ -12,16 +12,26 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/bimbingan_objek_tanggal"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tanggal Bimbingan"
-            />
+            android:text="Tanggal Bimbingan" />
         <TextView
             android:id="@+id/bimbingan_objek_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comment"
+            android:visibility="gone"/>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comment"/>
-
+            android:orientation="horizontal"
+            android:gravity="end">
+            <ImageView
+                android:id="@+id/bimbingan_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

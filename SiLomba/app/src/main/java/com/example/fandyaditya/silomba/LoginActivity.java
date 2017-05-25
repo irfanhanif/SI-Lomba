@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.fandyaditya.silomba.Profile.ProfileFragment;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
@@ -88,10 +89,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validate(String response){
         ParseJSON pj = new ParseJSON(response);
-        String status = pj.statusCodeParse();
+        List<String> dataLogin = pj.loginParse();
 
-        if(status.equals("success")){
+        if(dataLogin.get(0).equals("success")&&dataLogin.get(1).equals("user")){
             openPage(MainActivity.class);
+        }
+        else if(dataLogin.get(0).equals("success")&&dataLogin.get(1).equals("admin")){
+            openPage(AdminActivity.class);
         }
         else{
             Toast.makeText(getBaseContext(),"Login Gagal, Periksa nrp atau password kamu",Toast.LENGTH_LONG).show();
@@ -102,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Session session = new Session(getBaseContext());
         Intent myIntent = new Intent(getBaseContext(),page);
+
 //        Bundle bundle = new Bundle();
 //        bundle.putString("idUser",nrp.getText().toString());
 //        myIntent.putExtras(bundle);

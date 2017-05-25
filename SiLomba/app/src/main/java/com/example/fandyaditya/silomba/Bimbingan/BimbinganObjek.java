@@ -11,13 +11,17 @@ import com.example.fandyaditya.silomba.R;
 
 public class BimbinganObjek {
     private String id;
+    private String idTim;
     private String tanggal;
     private String comment;
+    private String fileBimbingan;
 
-    public BimbinganObjek(String id, String tanggal, String comment) {
+    public BimbinganObjek(String id,String idTim, String tanggal, String comment,String fileBimbingan) {
         this.id = id;
+        this.idTim = idTim;
         this.tanggal = tanggal;
         this.comment = comment;
+        this.fileBimbingan = fileBimbingan;
     }
 
     public String getId() {
@@ -32,7 +36,14 @@ public class BimbinganObjek {
         return comment;
     }
 
-//    public static class DetailBimbingan extends AppCompatActivity {
+    public String getIdTim() {
+        return idTim;
+    }
+
+    public String getFileBimbingan() {
+        return fileBimbingan;
+    }
+    //    public static class DetailBimbingan extends AppCompatActivity {
 //
 //        @Override
 //        protected void onCreate(Bundle savedInstanceState) {

@@ -1,5 +1,6 @@
 package com.example.fandyaditya.silomba.PengaturanTim.RequestCalon;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,13 +55,13 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionRequest(idUser,"accept");
+                actionRequest(idUser,"acc");
             }
         });
         holder.reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionRequest(idUser,"reject");
+                actionRequest(idUser,"rjt");
             }
         });
 
@@ -100,6 +101,7 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
                 Map<String,String> param = new HashMap<>();
                 param.put("nrp",idUser);
                 param.put("code",code);
+                param.put("id_tim",RequestCalonAnggota.idTim);
                 return param;
             }
         };
@@ -117,11 +119,10 @@ public class RequestCalonAdapter extends RecyclerView.Adapter<RequestCalonAdapte
             else Toast.makeText(context,"Gagal Menerima Anggota",Toast.LENGTH_LONG).show();
         }
         else{
-            if(status.equals("success")){
+            if(status.equals("rejected")){
                 Toast.makeText(context,"Anggota Ditolak",Toast.LENGTH_LONG).show();
             }
             else Toast.makeText(context,"Gagal Menolak Anggota",Toast.LENGTH_LONG).show();
         }
-
     }
 }

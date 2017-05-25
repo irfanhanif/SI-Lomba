@@ -134,7 +134,14 @@ public class ProfileFragment extends Fragment {
         namaProfile.setText(data.get(0));
         jurusanProfile.setText(data.get(1));
 //        angkatanProfile.setText(data.get(2));
-//        Glide.with(getContext()).load(data.get(3)).into(profPic);
+        String picPath = Konstanta.ip+"/file/"+data.get(3);
+        if(data.get(3).length()<=10){
+
+        }
+        else{
+            Glide.with(getContext()).load(picPath).into(profPic);
+        }
+
     }
     private void openIntent(Class x){
         Intent openPage = new Intent(getContext(),x);

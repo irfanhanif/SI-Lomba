@@ -1,8 +1,16 @@
 package com.example.fandyaditya.silomba.Profile;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,15 +24,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fandyaditya.silomba.FilePath;
 import com.example.fandyaditya.silomba.Konstanta;
 import com.example.fandyaditya.silomba.MainActivity;
 import com.example.fandyaditya.silomba.ParseJSON;
 import com.example.fandyaditya.silomba.R;
 import com.example.fandyaditya.silomba.Session;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AturProfile extends AppCompatActivity {
 
@@ -37,12 +53,16 @@ public class AturProfile extends AppCompatActivity {
     Bundle bundle;
     String profPic;
 
+    Uri filePic;
+
     String idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atur_profile);
+
+        requestStoragePermission();
 
         namaProfile = (EditText)findViewById(R.id.atur_profile_nama);
         jurusanProfile = (EditText)findViewById(R.id.atur_profile_jurusan);
@@ -53,6 +73,7 @@ public class AturProfile extends AppCompatActivity {
 
         simpanBtn.setOnClickListener(op);
         uploadBtn.setOnClickListener(op);
+        filePic = null;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Atur Profile");
@@ -78,16 +99,26 @@ public class AturProfile extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.atur_profile_simpanbtn:{
                     if(passwordProfile.getText().toString().compareTo(ulangiPassword.getText().toString())==0){
-                        update();
+                        if(filePic==null){
+                            update();
+                        }
+                        else uploadImg();
+                        finish();
                     }
                     else {
                         Toast.makeText(getBaseContext(),"Password tidak sama",Toast.LENGTH_SHORT).show();
                     }
+                    break;
                 }
-                case R.id.atur_profile_uploadbtn: uploadImg();break;
+                case R.id.atur_profile_uploadbtn: take_gallery(0);break;
             }
         }
     };
+    public void take_gallery(int choice){
+        Intent ambil_foto = new Intent (Intent.ACTION_GET_CONTENT,null);
+        ambil_foto.setType("image/*");
+        startActivityForResult(ambil_foto,choice);
+    }
 
     private void getData(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Konstanta.ip+"/editprofile", new Response.Listener<String>() {
@@ -143,7 +174,22 @@ public class AturProfile extends AppCompatActivity {
     }
 
     private void uploadImg(){
-
+        Toast.makeText(getBaseContext(),"Sedang mengupload file, harap tunggu . . .",Toast.LENGTH_LONG).show();
+        try {
+            String uploadId = UUID.randomUUID().toString();
+            String path = FilePath.getPath(getBaseContext(),filePic);
+            new MultipartUploadRequest(this,uploadId,Konstanta.ip+"/changeprofile")
+                    .addFileToUpload(path,"file")
+                    .addParameter(namaProfile.getText().toString(),"nama")
+                    .addParameter(jurusanProfile.getText().toString(),"jurusan")
+                    .addParameter(passwordProfile.getText().toString(),"password")
+                    .addParameter(idUser,"nrp")
+                    .setNotificationConfig(new UploadNotificationConfig())
+                    .setMaxRetries(2)
+                    .startUpload();
+        } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void fetchData(String response,String code){
@@ -167,6 +213,34 @@ public class AturProfile extends AppCompatActivity {
                 finish();
             }
             else Toast.makeText(getBaseContext(),"Gagal Edit Profil",Toast.LENGTH_LONG).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        filePic = data.getData();
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//
+//        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == 123) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

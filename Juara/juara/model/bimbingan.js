@@ -9,7 +9,7 @@ function Bimbingan(data){
       primaryKey: true
     },
     id_tim: Sequelize.STRING,
-    tanggal_bimbingan: Sequelize.DATE,
+    tanggal_bimbingan: Sequelize.DATEONLY,
     comment: Sequelize.STRING,
     file_bimbingan: Sequelize.STRING
   }, {

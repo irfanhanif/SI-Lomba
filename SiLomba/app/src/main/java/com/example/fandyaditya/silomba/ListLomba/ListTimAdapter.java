@@ -93,7 +93,7 @@ public class ListTimAdapter extends RecyclerView.Adapter<ListTimAdapter.ViewHold
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("idTim",idTim);
+                param.put("id_tim",idTim);
                 param.put("nrp",nrp);
                 return param;
             }

@@ -37,6 +37,19 @@ public class ParseJSON {
         }
         return parseVal;
     }
+    public List<String> loginParse(){
+        JSONObject jsonObject;
+        List<String> parseVal = new ArrayList<>();
+
+        try {
+            jsonObject = new JSONObject(json);
+            parseVal.add(jsonObject.getString("status"));
+            parseVal.add(jsonObject.getString("status_user"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parseVal;
+    }
     public List<String> detailBimbinganParse(){
         JSONObject jsonObject;
         List<String> parseVal = new ArrayList<>();
@@ -171,26 +184,25 @@ public class ParseJSON {
             parseVal.add(jsonObject.getString("jurusan"));
             parseVal.add(jsonObject.getString("password"));
 //            parseVal.add(jsonObject.getString("angkatan"));
-//            parseVal.add(jsonObject.getString("file_profpic"));
+            parseVal.add(jsonObject.getString("file_fotoprofil"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return parseVal;
     }
     public List<DosenObjek> listDosen(){
-        JSONObject jsonObject;
+        JSONArray jsonArray;
         List<DosenObjek> parseVal = new ArrayList<>();
 
         try {
-            jsonObject = new JSONObject(json);
-            JSONArray data = jsonObject.getJSONArray("data");
-            for(int i=0;i<data.length();i++){
-                JSONObject jRow = data.getJSONObject(i);
+            jsonArray = new JSONArray(json);
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jRow = jsonArray.getJSONObject(i);
                 DosenObjek dosenObjek = new DosenObjek(
                         jRow.getString("id_dosbing"),
                         jRow.getString("nama_dosbing"),
-                        jRow.getString("jurusan_dosbing"),
-                        jRow.getString("nohp_dosbing")
+                        jRow.getString("hp_dosbing"),
+                        jRow.getString("jurusan_dosbing")
                 );
                 parseVal.add(dosenObjek);
             }
@@ -221,18 +233,20 @@ public class ParseJSON {
         return parseVal;
     }
     public List<BimbinganObjek> listBimbingan(){
-        JSONObject jsonObject;
+        JSONArray jsonArray;
         List<BimbinganObjek> parseVal = new ArrayList<>();
 
         try {
-            jsonObject = new JSONObject(json);
-            JSONArray data = jsonObject.getJSONArray("data");
-            for (int i=0;i<data.length();i++){
-                JSONObject jRow = data.getJSONObject(i);
+            jsonArray = new JSONArray(json);
+            for (int i=0;i<jsonArray.length();i++){
+                JSONObject jRow = jsonArray.getJSONObject(i);
+                String[] dateSplit = jRow.getString("tanggal_bimbingan").split("T");
                 BimbinganObjek bimbinganObjek = new BimbinganObjek(
                         jRow.getString("id_bimbingan"),
-                        jRow.getString("tanggal_bimbingan"),
-                        jRow.getString("comment_bimbingan")
+                        jRow.getString("id_tim"),
+                        dateSplit[0],
+                        jRow.getString("comment"),
+                        jRow.getString("file_bimbingan")
                 );
                 parseVal.add(bimbinganObjek);
             }
