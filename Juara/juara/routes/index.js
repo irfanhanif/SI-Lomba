@@ -25,7 +25,7 @@ router.post('/editprofile', function(req, res, next){
 });
 router.post('/changeprofile', function(req, res, next){
   var user = new UserController();
-  user.changeProfile(res, req.body);
+  user.changeProfile(res, req);
 });
 
 /* Routing Tim */

@@ -22,11 +22,12 @@ function User(data){
   });
 }
 
-User.prototype.changeUserProfile = function(req){
+User.prototype.changeUserProfile = function(req, filename){
   return this.User.update({
     nama: req.nama,
     jurusan: req.jurusan,
-    password: req.password
+    password: req.password,
+    file_fotoprofil: filename
   }, {
     where: {
       nrp: req.nrp
