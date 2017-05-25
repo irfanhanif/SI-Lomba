@@ -97,4 +97,15 @@ router.post('/download', function(req, res, next){
   res.sendFile(path.join(__dirname, '../unggahan', 'its.png'));
 });
 
+/* Kirim gambar */
+router.get('/file/:file', function(req, res, next){
+  var filename = req.params.file;
+  var path = require('path');
+  res.sendFile(path.join(__dirname, '../unggahan', filename), function(err){
+    if(err){
+      res.send("error");
+    }
+  });
+});
+
 module.exports = router;
