@@ -102,10 +102,10 @@ router.post('/upload', function(req, res, next){
   upload(req, res, function(err){
     if(err){
       var ret = {"status": "failed"};
-      res.end(ret);
+      res.send(ret);
     } else {
       var ret = {"status": "uploaded"};
-      res.end(ret);
+      res.send(ret);
     }
   });
 });
