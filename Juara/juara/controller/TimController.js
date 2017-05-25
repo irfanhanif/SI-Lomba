@@ -14,6 +14,46 @@ TimController.prototype.createTeam = function(res, req){
   });
 }
 
+TimController.prototype.inputBimbingan = function(res, req){
+  this.bimbingan = require('../Model/bimbingan')
+  var multer = require('multer');
+
+  var bimbingan = new this.bimbingan();
+
+  var storage = multer.diskStorage({
+    destination: function(req, file, callback){
+      callback(null, 'unggahan')
+    },
+    filename: function(req, file, callback){
+      console.log(file);
+      callback(null, file.originalname)
+    }
+  });
+
+  var upload = multer({
+    storage: storage,
+  }).array('file', 1);
+
+  upload(req, res, function(err){
+    if(err){
+      console.log(err);
+      var ret = {"status": "failed"};
+      res.send(ret);
+    } else {
+      bimbingan.insert(req.body, req.files[0].originalname).then(function(result){
+        var ret = {"status": "uploaded"};
+        res.send(ret);
+      })
+      .catch(function(err){
+        console.log(err);
+        var ret = {"status": "failed"};
+        res.send(ret);
+      });
+      console.log(req);
+    }
+  });
+}
+
 TimController.prototype.editTeam = function(res, req){
   var tim = new this.tim();
   tim.editTeam(req).then(function(result){
