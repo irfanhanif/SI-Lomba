@@ -5,6 +5,8 @@ var UserController = require('../controller/UserController');
 var TimController = require('../controller/TimController');
 var LombaController = require('../controller/LombaController');
 
+var multer = require('multer');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -80,6 +82,32 @@ router.post('/lombabaru', function(req, res, next){
 router.post('/getdosbing', function(req, res, next){
   var lomba = new LombaController();
   lomba.getDosbing(res, req.body);
+});
+
+var storage = multer.diskStorage({
+  destination: function(req, file, callback){
+    callback(null, 'unggahan')
+  },
+  filename: function(req, file, callback){
+    console.log(file);
+    callback(null, file.originalname)
+  }
+});
+
+router.post('/upload', function(req, res, next){
+  var upload = multer({
+    storage: storage,
+  }).single('file');
+
+  upload(req, res, function(err){
+    if(err){
+      var ret = {"status": "failed"};
+      res.end(ret));
+    } else {
+      var ret = {"status": "uploaded"};
+      res.end(ret);
+    }
+  });
 });
 
 module.exports = router;
