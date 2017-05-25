@@ -54,6 +54,14 @@ TimController.prototype.inputBimbingan = function(res, req){
   });
 }
 
+TimController.prototype.getAllBimbingan = function(res, req){
+  this.bimbingan = require('../Model/bimbingan');
+  var bimbingan = new this.bimbingan();
+  bimbingan.getAll(req).then(function(result){
+    res.send(result);
+  });
+}
+
 TimController.prototype.editTeam = function(res, req){
   var tim = new this.tim();
   tim.editTeam(req).then(function(result){

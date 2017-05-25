@@ -31,4 +31,8 @@ Bimbingan.prototype.insert = function(req, filename){
   return new_data.save()
 }
 
+Bimbingan.prototype.getAll = function(req){
+  return this.Bimbingan.findAll();
+}
+
 module.exports = Bimbingan;

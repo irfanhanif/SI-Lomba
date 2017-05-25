@@ -65,6 +65,10 @@ router.post('/editteam', function(req, res, nect){
   var tim = new TimController();
   tim.editTeam(res, req.body);
 });
+router.post('/semuabimbingan', function(req, res, nect){
+  var tim = new TimController();
+  tim.getAllBimbingan(res, req.body);
+});
 
 /* Routing Lomba */
 router.post('/listlomba', function(req, res, next){
