@@ -91,45 +91,59 @@ TimController.prototype.certainTeam = function(res, req){
 }
 
 TimController.prototype.acceptRequest = function(res, req){
-  var insert_status = -1;
-  var delete_status = -1;
+  if(req.code == "acc"){
+    var insert_status = -1;
+    var delete_status = -1;
 
-  function result(){
-    if(insert_status == 0 || delete_status == 0){
-      var ret = {"status": "failed"};
-      res.send(ret);
-      return;
+    function result(){
+      if(insert_status == 0 || delete_status == 0){
+        var ret = {"status": "failed"};
+        res.send(ret);
+        return;
+      }
+      else if(insert_status == 1 && delete_status == 1){
+        var ret = {"status": "success"};
+        res.send(ret);
+        return;
+      }
+      else{
+        setTimeout(result, 100);
+        return;
+      }
     }
-    else if(insert_status == 1 && delete_status == 1){
-      var ret = {"status": "success"};
-      res.send(ret);
-      return;
-    }
-    else{
-      setTimeout(result, 100);
-      return;
-    }
+
+    this.anggota_tim = require('../Model/anggota_tim');
+    var anggota_tim = new this.anggota_tim();
+    anggota_tim.insertNewMember(req).then(function(result){
+      insert_status = 1;
+    })
+    .catch(function(err){
+      insert_status = 0;
+    });
+
+    this.request_tim = require('../Model/request_tim');
+    var request_tim = new this.request_tim();
+    request_tim.deleteRequest(req).then(function(result){
+      delete_status = 1;
+    })
+    .catch(function(err){
+      delete_status = 0;
+    });
+
+    setTimeout(result, 100);
   }
-
-  this.anggota_tim = require('../Model/anggota_tim');
-  var anggota_tim = new this.anggota_tim();
-  anggota_tim.insertNewMember(req).then(function(result){
-    insert_status = 1;
-  })
-  .catch(function(err){
-    insert_status = 0;
-  });
-
-  this.request_tim = require('../Model/request_tim');
-  var request_tim = new this.request_tim();
-  request_tim.deleteRequest(req).then(function(result){
-    delete_status = 1;
-  })
-  .catch(function(err){
-    delete_status = 0;
-  });
-
-  setTimeout(result, 100);
+  else{
+    this.request_tim = require('../Model/request_tim');
+    var request_tim = new this.request_tim();
+    request_tim.deleteRequest(req).then(function(result){
+      var ret = {"status": "rejected"};
+      res.send(ret);
+    })
+    .catch(function(err){
+      var ret = {"status": "failed to reject"};
+      res.send(ret);
+    });
+  }
 }
 
 TimController.prototype.requestToJoinTeam = function(res, req){
